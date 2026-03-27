@@ -48,16 +48,9 @@ Esta plantilla proporciona una configuración base para trabajar con React en Vi
   * `@vitejs/plugin-react`: utiliza [Oxc](https://oxc-project.github.io/) para una transformación rápida.
   * `@vitejs/plugin-react-swc`: utiliza [SWC](https://swc.rs/) para una transformación rápida.
 
-> **Nota sobre el Compilador de React**: El React Compiler no está habilitado por defecto en esta plantilla debido a su impacto en el rendimiento de desarrollo y construcción.
 
-## [cite_start]Versionamiento [cite: 109]
+## Versionamiento 
 
 Este repositorio utiliza etiquetas (tags) para marcar hitos importantes:
 
-  * [cite_start]**Tag 0.0.1**: Versión inicial donde el proyecto levanta y muestra la pantalla por defecto[cite: 76, 110, 113].
-
------
-
-### Siguiente paso sugerido:
-
-[cite_start]Ahora que tienes el **README.md** listo y el proyecto levantado, ¿te gustaría que te ayude con los comandos finales de Git para subir este archivo y crear formalmente el **tag 0.0.1**? [cite: 111, 112]
+  * **Tag 0.0.1**: Versión inicial donde el proyecto levanta y muestra la pantalla por defecto.
