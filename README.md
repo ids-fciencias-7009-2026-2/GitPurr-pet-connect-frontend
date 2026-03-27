@@ -1,8 +1,5 @@
 # GitPurr-pet-connect-frontend
 
-
-# PetConnect - Frontend (gitPurr)
-
 ## Descripción 
 
 Este repositorio contiene la interfaz de usuario para el proyecto **PetConnect**. Es un sistema independiente que se comunica con la API de Spring Boot mediante servicios REST.
