@@ -47,6 +47,7 @@ Esta plantilla proporciona una configuración base para trabajar con React en Vi
 
   * `@vitejs/plugin-react`: utiliza [Oxc](https://oxc-project.github.io/) para una transformación rápida.
   * `@vitejs/plugin-react-swc`: utiliza [SWC](https://swc.rs/) para una transformación rápida.
+  
 
 
 ## Versionamiento 
