@@ -1,0 +1,163 @@
+/* 
+===============================================
+    Estilos de la pagina de inicio de sesion.
+===============================================
+*/
+
+/*
+====================================
+Estilos del lado del formulario
+====================================
+*/
+.pagina-inicio-sesion {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Estila el contenedor principal. Se establece como una tarjeta centrada. */
+.inicio-sesion-side {
+    width: 40%;
+    background-color: var(--color-background);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.inicio-sesion-card {
+    background-color: var(--color-card);
+    border-radius: 20px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.inicio-sesion-video-side {
+    flex: 1;
+    position:relative;
+    overflow: hidden;
+}
+
+.text-container {
+    position: absolute;
+    z-index: 2;
+    flex-direction: row;
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin-top:20% ;
+    margin-left: -10%;
+}
+
+.text-container > h2 {
+    font-size: 5em;
+    font-weight: 700;
+    color: var(--color-text);
+    text-shadow: 0 2px 10px var(--color-text-muted);
+}
+
+.text-container p {
+    font-size: 1.5em;
+    text-shadow: 0 2px 10px;
+    width: 100%;
+    font-family: sans-serif;
+}
+
+.inicio-sesion-video-side video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Icono de huella en la parte superior de la tarjeta. */
+.login-icon {
+    font-size: 48px;
+    color: var(--color-text);
+    margin-bottom: 16px;
+}
+
+/* Define los estilos de fuente del titulo. */
+.inicio-sesion-side h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+/* Define los estilos de fuente del subtitulo. */
+.subtitulo-inicio-sesion {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin-bottom: 32px;
+}
+
+/* Formulario - campos y boton de envio. */
+
+/* Establece los espacios del formulario. Define la direccion
+de sus componentes y el espaciado entre ellos. */
+.inicio-sesion-side form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Define el estilo del boton de submit ubicado en la parte
+inferior de la tarjeta. Define estilos de fuente y de color. */
+.inicio-sesion-side button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-family: var(--font-main);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-top: 8px;
+    transition: background-color 0.3s;
+}
+
+/* Define el hover del boton submit. */
+.inicio-sesion-side button[type="submit"]:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* Modifica el estilo de los parrafos en la tarjeta. */
+.inicio-sesion-side > p {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+/* Define los estilos de los links dentro de parrafos. */
+.inicio-sesion-side > p a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Define el estilo hover de un link dentro de un parrafo.*/
+.inicio-sesion-side > p a:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+}
+
+/* Establece un color y estilo de fuente para la muestra de un error. */
+.mensaje-error {
+    color: var(--color-error);
+    font-size: 13px;
+    text-align: center;
+}
