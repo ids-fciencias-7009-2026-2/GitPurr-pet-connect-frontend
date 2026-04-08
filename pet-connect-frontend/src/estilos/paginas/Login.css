@@ -28,6 +28,7 @@ Estilos del lado del formulario
     overflow-y: auto;
 }
 
+/* Estila el contenedor del formulario*/
 .inicio-sesion-card {
     background-color: var(--color-card);
     border-radius: 20px;
@@ -40,26 +41,27 @@ Estilos del lado del formulario
     justify-content: center;
 }
 
+/* Estila el contenedor del video al lado izquierdo*/
 .inicio-sesion-video-side {
     flex: 1;
     position:relative;
     overflow: hidden;
 }
 
+/*  Estila el contenedor del texto que tiene el titulo y el eslogan */
 .text-container {
     position: absolute;
     z-index: 2;
-    flex-direction: row;
-    width: 70%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    margin-top:20% ;
-    margin-left: -10%;
+    text-align: left;
+    justify-content: flex-end;
+    bottom: 110px;
+    left: 32px;
+    width: 80%;
 }
 
+/* Estila el titulo de la aplicacion en el inicio-sesion-video-side */
 .text-container > h2 {
     font-size: 5em;
     font-weight: 700;
@@ -67,6 +69,7 @@ Estilos del lado del formulario
     text-shadow: 0 2px 10px var(--color-text-muted);
 }
 
+/* Estila el eslogan de la aplicacion */
 .text-container p {
     font-size: 1.5em;
     text-shadow: 0 2px 10px;
@@ -74,6 +77,7 @@ Estilos del lado del formulario
     font-family: sans-serif;
 }
 
+/* Ajusta el video  */
 .inicio-sesion-video-side video {
     width: 100%;
     height: 100%;
@@ -160,4 +164,75 @@ inferior de la tarjeta. Define estilos de fuente y de color. */
     color: var(--color-error);
     font-size: 13px;
     text-align: center;
+}
+
+/*
+================================================================
+        Media Queries - Diseño responsivo
+================================================================
+*/
+
+@media (max-width: 1024px){
+    .inicio-sesion-side {
+        width: 50%;
+    }
+
+    .text-container {
+        width: 90%;
+        margin-top: 0;
+        margin-left: 0;
+        padding: 0 24px;
+        justify-content: flex-end;
+        padding-bottom: 40px;
+        height: 100%;
+    }
+
+    .text-container > h2 {
+        font-size: 3.5em;
+    }
+
+    .text-container p {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 768px) {
+    .pagina-inicio-sesion {
+        flex-direction: column;
+    }
+
+    .inicio-sesion-side {
+        width: 100%;
+        height: 100vh;
+        box-shadow: none;
+    }
+
+    .inicio-sesion-video-side {
+        display: none;
+    }
+
+    .inicio-sesion-card {
+        padding: 32px 24px;
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px){
+    .inicio-sesion-card {
+        padding: 24px 16px;
+        border-radius: 14px;
+    }
+
+    .inicio-sesion-side h2 {
+        font-size: 22px;
+    }
+
+    .login-icon{
+        font-size: 38px;
+    }
+
+    .inicio-sesion-side button {
+        padding: 12px;
+        font-size: 15px;
+    }
 }

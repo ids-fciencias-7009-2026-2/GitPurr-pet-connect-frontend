@@ -119,7 +119,10 @@ function Login() {
                             tipo="email"
                             placeholder="usuario@ejemplo.com"
                             value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            onChange={e => {
+                                setEmail(e.target.value)
+                                setErrores(prev => ({...prev,general:null}))
+                            }}
                             error={errores.email}
                         />
                         <SolicitarCampo
