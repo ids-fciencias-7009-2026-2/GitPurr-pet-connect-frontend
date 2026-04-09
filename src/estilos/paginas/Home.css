@@ -1,0 +1,111 @@
+/* 
+===============================================
+    Estilos de la pagina de inicio.
+===============================================
+*/
+
+/* Sobreescribe el body para que el home no quede centrado. */
+body:has(.pagina-home) {
+    display: block;
+    align-items: unset;
+    justify-content: unset;
+}
+
+/* Contenedor principal de la pagina. Deja espacio
+arriba para la navbar fija. */
+.pagina-home {
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 70px;
+}
+
+/* Estila la seccion hero con fondo naranja. */
+.home-hero {
+    background: linear-gradient(135deg, #F5A623, #C97B0E);
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Estila el titulo principal del hero. */
+.home-hero-titulo {
+    font-size: 52px;
+    font-weight: 700;
+    color: white;
+    max-width: 600px;
+}
+
+/* Estila el subtitulo del hero. */
+.home-hero-subtitulo {
+    font-size: 18px;
+    color: white;
+    max-width: 700px;
+}
+
+/* Estila la seccion de filtros. */
+.home-filtros {
+    display: flex;
+    gap: 12px;
+    padding: 24px 0;
+    background-color: var(--color-card);
+    border-bottom: 1px solid var(--color-border);
+    justify-content: center;
+    width: 100%;
+}
+
+/* Estila los botones de filtro inactivos. */
+.filtro {
+    padding: 10px 28px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 20px;
+    background-color: transparent;
+    font-family: var(--font-main);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Estila el boton de filtro activo. */
+.filtro-activo {
+    padding: 10px 28px;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--color-text);
+    font-family: var(--font-main);
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+}
+
+/* Hover de los botones de filtro. */
+.filtro:hover {
+    border-color: var(--color-text);
+    color: var(--color-text);
+}
+
+/* Estila la seccion de mascotas disponibles. */
+.home-mascotas {
+    padding: 32px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Estila el titulo de mascotas disponibles. */
+.home-mascotas-titulo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+/* Estila el grid de tarjetas de mascotas. */
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 16px;
+}
