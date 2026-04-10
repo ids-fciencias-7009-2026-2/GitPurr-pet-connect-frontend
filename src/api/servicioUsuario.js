@@ -11,8 +11,8 @@ import { api } from "./axiosApi";
  * @returns {Promise} Promesa con los datos del usuario creado.
  */
 export const registro = (usuario) => {
-    return api.post('/usuarios/register', usuario).then((respuesta) => respuesta.data)
-}
+    return api.post("/usuarios/register", usuario).then((respuesta) => respuesta.data);
+};
 
 /**
  * Realiza una peticion POST al endpoint de login que autentica al usuario 
@@ -27,11 +27,11 @@ export const registro = (usuario) => {
  * @returns {Promise} Promesa con el token de sesion iniciada.
  */
 export const login = (credenciales) => {
-    return api.post('/usuarios/login', credenciales).then((respuesta) =>{
-        localStorage.setItem('token', respuesta.data.token)
-        return respuesta.data
-    })
-}
+    return api.post("/usuarios/login", credenciales).then((respuesta) => {
+        sessionStorage.setItem("token", respuesta.data.token);
+        return respuesta.data;
+    });
+};
 
 /**
  * Realiza una peticion GET al endpoint de me que nos permite recuperar
@@ -41,8 +41,8 @@ export const login = (credenciales) => {
  * @returns {Promise} Una promesa con los datos del usuario autenticado.
  */
 export const me = () => {
-    return api.get('/usuarios/me').then((respuesta) => respuesta.data)
-}
+    return api.get("/usuarios/me").then((respuesta) => respuesta.data);
+};
 
 /**
  * Realiza una peticion POST al endpoint de ciere de sesion.
@@ -51,12 +51,9 @@ export const me = () => {
  * 
  * @returns {Promise} Promesa con la confirmacion de cierre de sesion.
  */
-export const logout = () =>{
-    return api.post('/usuarios/logout').then((respuesta) => {
-        localStorage.removeItem('token')
-        return respuesta.data
-    })
-}
+export const logout = async () => {
+    sessionStorage.removeItem("token");
+};
 
 /**
  * Realiza una peticion PATCH para actualizar parcialmente la informacion
@@ -72,5 +69,5 @@ export const logout = () =>{
  * @returns {Promise} Promesa con los datos del usuario actualizado.
  */
 export const update = (usuarioActualizado) => {
-    return api.patch('/usaurios', usuarioActualizado).then((respuesta) => respuesta.data)
-}
+    return api.put("/usuarios", usuarioActualizado).then((respuesta) => respuesta.data);
+};

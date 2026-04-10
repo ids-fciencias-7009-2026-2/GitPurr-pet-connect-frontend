@@ -37,7 +37,12 @@ function Home() {
      * autenticado mediante el endpoint /usuarios/me.
      */
     useEffect(() => {
-        me().then(setUsuario).catch(() => setUsuario(null))
+        me()
+          .then(setUsuario)
+          .catch(() => {
+             sessionStorage.removeItem("token")
+             navegacion("/login")
+        })
     }, [])
 
     /**

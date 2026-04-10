@@ -28,11 +28,12 @@ export const api = axios.create({
  * @returns {object} config - La configuracion inicial con el header Authorization 
  * agregado en caso de que exista.
  */
-api.interceptors.request.use( config => {
-    const token = localStorage.getItem('token');
-    if(token) {
-        config.headers.Authorization = `Bearer ${token}`
+api.interceptors.request.use((config) => {
+    const token = sessionStorage.getItem("token");
+
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
     }
 
-    return config
-})
+    return config;
+});
