@@ -1,0 +1,40 @@
+/* 
+    Define los estilos del componente reutilizable de campo
+    de formulario.  
+*/
+
+/* Agrupa la etiqueta y el input de forma vertical. */
+.solicitud-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+/* Da formato a la etiqueta del campo de formulario. */
+.solicitud-campo label {
+    font-size: 16px;
+    font-family: var(--font-main);
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+/* Define los estilos del campo de entrada */
+.solicitud-campo input {
+    padding: 12px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 10px ;
+    font-family: var(--font-main);
+    font-size: 15px;
+    background-color: var(--color-input);
+    color: var(--color-text);
+    transition: border-color 0.2s;
+}
+
+/* Establece los estilos del campo de mensaje de error. Es visible
+solamente cuando el campo es invalido. */
+.error-de-campo {
+    color: var(--color-error);
+    font-size: 12px;
+    padding-left: 12px;
+}

@@ -1,0 +1,126 @@
+/* 
+===============================================
+    Estilos del componente TarjetaMascota.
+===============================================
+*/
+
+/* Contenedor principal de la tarjeta. */
+.tarjeta-mascota {
+    background-color: var(--color-card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor de la imagen con posicion relativa para el boton de favorito. */
+.tarjeta-imagen-contenedor {
+    position: relative;
+    width: 100%;
+    height: 220px;
+}
+
+/* Imagen de la mascota. */
+.tarjeta-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Boton de favorito sobre la imagen. */
+.tarjeta-favorito {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--color-card);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Contenedor de la informacion de la mascota. */
+.tarjeta-info {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Encabezado con nombre y sexo en la misma fila. */
+.tarjeta-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Nombre de la mascota. */
+.tarjeta-nombre {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--color-text);
+}
+
+/* Raza de la mascota. */
+.tarjeta-raza {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+/* Badge de sexo. */
+.tarjeta-sexo {
+    background-color: var(--color-input);
+    color: var(--color-text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* Ubicacion de la mascota. */
+.tarjeta-ubicacion {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+/* Edad de la mascota. */
+.tarjeta-edad {
+    font-size: 14px;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+/* Boton de ver perfil. */
+.tarjeta-boton {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background-color 0.3s;
+}
+
+/* Hover del boton de ver perfil. */
+.tarjeta-boton:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* Estila el icono de corazon dentro del boton de favorito. */
+.tarjeta-favorito-icono {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}

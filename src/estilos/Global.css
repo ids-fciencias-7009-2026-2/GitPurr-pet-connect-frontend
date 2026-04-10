@@ -1,0 +1,45 @@
+/*
+==============================================================
+    Contiene los estilos base de la aplicacion. Se aplican
+    a toda la aplicacion y define la paleta de colores a usar,
+    tipografia y reset de los estilos por defecto. Esto
+    facilita la escalabilidad del css de la aplicacion.
+==============================================================
+*/
+
+/* Elimina los margenes y padding por defecto del navegador.*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Define las variables globales, tales como paletas de colores y 
+tipografias. La modificacion de las variables afecta a toda la aplicacion.*/
+:root {
+    --color-primary: #F5A623;
+    --color-primary-hover: #e09520;
+    --color-background: #FAF6EE;
+    --color-card: #FFFFFF;
+    --color-text: #2E2A3B;
+    --color-text-muted: #7A7585;
+    --color-border: #E8E3F0;
+    --color-error: #e74c3c;
+    --color-valid: #27ae60;
+    --font-main: 'Exo 2', sans-serif;
+    --color-input: #F5F3FA;
+    --color-title: #E96002;
+}
+
+/* Estilos base del cuerpo de la pagina. Centra el contenido
+principal verticalmente y horizontalmente.
+*/
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
