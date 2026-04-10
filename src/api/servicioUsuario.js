@@ -41,7 +41,7 @@ export const login = (credenciales) => {
  * @returns {Promise} Una promesa con los datos del usuario autenticado.
  */
 export const me = () => {
-    return api.get('/usuario/me').then((respuesta) => respuesta.data)
+    return api.get('/usuarios/me').then((respuesta) => respuesta.data)
 }
 
 /**

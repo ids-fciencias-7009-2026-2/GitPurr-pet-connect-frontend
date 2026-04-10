@@ -1,0 +1,187 @@
+    /* 
+    ===============================================
+        Estilos del componente Navbar.
+    ===============================================
+    */
+
+    /* Estila la barra de navegacion principal. Se mantiene fija en la
+    parte superior de la pantalla. */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        background-color: var(--color-card);
+        border-bottom: 1px solid var(--color-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 32px;
+        gap: 16px;
+    }
+
+    /* Estila la imagen del logo de pet shop */
+    .navbar-petshop {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+    }
+
+    /* Agrupa el titulo y subtitulo del logo en columna. */
+    .navbar-logo-texto {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Estila el nombre de la aplicacion. */
+    .navbar-titulo {
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--color-text);
+    }
+
+    /* Estila el eslogan debajo del nombre. */
+    .navbar-subtitulo {
+        font-size: 11px;
+        color: var(--color-text-muted);
+    }
+
+    /* Estila la barra de busqueda con icono y campo de texto. */
+    .navbar-busqueda {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: var(--color-input);
+        border-radius: 20px;
+        padding: 8px 16px;
+        flex: 1;
+        max-width: 400px;
+        color: var(--color-text-muted);
+    }
+
+    /* Estila el input dentro de la barra de busqueda. */
+    .navbar-busqueda input {
+        border: none;
+        background: transparent;
+        outline: none;
+        font-family: var(--font-main);
+        font-size: 14px;
+        color: var(--color-text);
+        width: 100%;
+    }
+
+    /* Agrupa los iconos de accion y el usuario a la derecha. */
+    .navbar-acciones {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 20px;
+        color: var(--color-text-muted);
+        cursor: pointer;
+    }
+
+    /* Define el hover de los iconos de accion. */
+    .navbar-acciones i:hover {
+        color: var(--color-primary);
+    }
+
+    /* Contenedor del icono de usuario con posicion relativa
+    para el dropdown. */
+    .navbar-usuario {
+        position: relative;
+    }
+
+    /* Estila el menu desplegable del usuario. */
+    .navbar-dropdown {
+        position: absolute;
+        right: 0;
+        top: 36px;
+        background-color: var(--color-card);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        padding: 16px;
+        min-width: 180px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* Estila el nombre del usuario dentro del dropdown. */
+    .navbar-nombre {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--color-text);
+    }
+
+    /* Estila el email del usuario dentro del dropdown. */
+    .navbar-email {
+        font-size: 12px;
+        color: var(--color-text-muted);
+    }
+
+    /* Separador entre info del usuario y opciones. */
+    .navbar-dropdown hr {
+        border: none;
+        border-top: 1px solid var(--color-border);
+    }
+
+    /* Estila el boton de cerrar sesion dentro del dropdown. */
+    .navbar-dropdown button {
+        background: none;
+        border: none;
+        color: var(--color-error);
+        font-family: var(--font-main);
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: left;
+        padding: 0;
+    }
+
+    /* Define el hover del boton de cerrar sesion. */
+    .navbar-dropdown button:hover {
+        text-decoration: underline;
+    }
+
+    /* Estila la imagen de lupa de la barra de busqueda */
+    .navbar-lupa {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+        opacity: 0.5;
+    }
+
+    /* Estila los iconos de accion de la barra */
+    .navbar-icono {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+        opacity: 0.6;
+        cursor: pointer;
+    }
+
+    /* Define el hover de los iconos de accion */
+    .navbar-icono:hover {
+        opacity: 1;
+    }
+
+    /* Contenedor del icono de usuario con posicion relativa para el dropdown. */
+    .navbar-usuario {
+        position: relative;
+    }
+
+    /*Ajustar tamñao del icono de Usuario*/
+    .navbar-usuario .navbar-icono {
+        width: 27px;
+        height: 27px;
+    }
+
+    /* Agrupa el icono y el texto del logo. */
+    .navbar-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+    }
