@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
+import { Mail, User } from "lucide-react"
 import { login } from "../api/servicioUsuario"
 import SolicitarCampo from "../componentes/SolicitarCampo"
 import "../estilos/paginas/Login.css"
@@ -123,6 +124,7 @@ function Login() {
                                 setEmail(e.target.value)
                                 setErrores(prev => ({...prev,general:null}))
                             }}
+                            icono={<Mail size={20}/>}
                             error={errores.email}
                         />
                         <SolicitarCampo
@@ -132,6 +134,7 @@ function Login() {
                             placeholder="Contraseña"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
+                            icono={<User size={20}/>}
                             error={errores.password}
                         />
                         {errores.general && <p className="mensaje-error">{errores.general}</p>}

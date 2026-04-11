@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { PawPrint, Heart, Dog, Cat, Eye, EyeOff } from "lucide-react";
+import { PawPrint, Heart, Dog, Cat, Eye, EyeOff, Mail, User, Lock } from "lucide-react";
 import { registro } from '../api/servicioUsuario';
 import SolicitarCampo from '../componentes/SolicitarCampo';
 import '../estilos/paginas/Register.css';
@@ -86,6 +86,7 @@ const Register = () => {
                       placeholder="Tu nombre de usuario"
                       value={nombre}
                       onChange={(e) => setNombre(e.target.value)}
+                      icono={<User size={20} />}
                   />
                 </div>
 
@@ -97,6 +98,7 @@ const Register = () => {
                       placeholder="tu@correo.com"
                       value={correo}
                       onChange={(e) => setCorreo(e.target.value)}
+                      icono={<Mail size={20} />}
                   />
                 </div>
 
@@ -108,12 +110,13 @@ const Register = () => {
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      icono={<Lock size={20} />}
                   />
                   <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="password-toggle"
-                      style={{ position: 'absolute', right: '10px', top: '32px' }}
+                      style={{ position: 'absolute', right: '10px', bottom: '10px'}}
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
