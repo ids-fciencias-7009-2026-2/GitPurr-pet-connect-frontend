@@ -76,13 +76,20 @@
     margin-bottom: 25px;
 }
 
-/* Inputs del formulario */
+/* =========================================
+   Inputs del formulario (Adaptados a SolicitarCampo)
+   ========================================= */
 .form-group {
     margin-bottom: 20px;
     text-align: left;
 }
 
-.form-group label {
+.solicitud-campo {
+    width: 100%;
+    position: relative;
+}
+
+.solicitud-campo label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
@@ -90,18 +97,29 @@
     color: var(--color-text);
 }
 
-.input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+.solicitud-campo input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-input);
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--color-text);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
-.input-icon {
-    position: absolute;
-    left: 14px;
-    color: var(--color-text-muted);
-    width: 20px;
-    height: 20px;
+.solicitud-campo input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background-color: #ffffff;
+}
+
+.solicitud-campo .error-de-campo {
+    color: #b91c1c;
+    font-size: 0.8rem;
+    margin-top: 5px;
 }
 
 .password-toggle {
@@ -116,25 +134,9 @@
     justify-content: center;
 }
 
-.form-input {
-    width: 100%;
-    padding: 12px 12px 12px 45px;
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
-    background-color: var(--color-input);
-    font-family: inherit;
-    font-size: 1rem;
-    color: var(--color-text);
-    transition: all 0.3s ease;
-}
-
-.form-input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    background-color: #ffffff;
-}
-
-/* Botón y links */
+/* =========================================
+   Botón y links
+   ========================================= */
 .btn-submit {
     width: 100%;
     padding: 14px;
