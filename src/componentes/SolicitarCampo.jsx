@@ -1,3 +1,4 @@
+import { Eye, EyeOff } from "lucide-react"
 /**
  * Componente reutilizable para campos de formularios.
  * 
@@ -13,18 +14,27 @@
  * @param {string} error - Mensaje de error del campo en caso de tenerlo.
  * @returns {JSX.Element} label e input agrupados dentro de un contenedor.
  */
-function SolicitarCampo ({id,etiqueta,tipo,placeholder,value,onChange,error}) {
+function SolicitarCampo ({id,etiqueta,tipo,placeholder,value,onChange,error,icono,togglePassword}) {
     return(
    <div className="solicitud-campo">
         <label htmlFor={id}>{etiqueta}</label>
-        <input
-            id={id}
-            name={id}
-            type={tipo}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-        />
+        <div className="solicitud-input-wrapper">
+            {icono && <span className="solicitud-input-icon">{icono}</span>}
+            <input
+                id={id}
+                name={id}
+                type={tipo}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                className={icono ? "con-icono" : ""}
+            />
+             {togglePassword && (
+                    <button type="button" onClick={togglePassword} className="password-toggle">
+                        {tipo === "password" ? <Eye size={20} /> : <EyeOff size={20} />}
+                    </button>
+                )}
+        </div>
         {error && <p className="error-de-campo">{error}</p>}
     </div>
    ) 

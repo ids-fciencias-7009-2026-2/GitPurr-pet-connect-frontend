@@ -80,6 +80,7 @@
    Inputs del formulario (Adaptados a SolicitarCampo)
    ========================================= */
 .form-group {
+    position: relative;
     margin-bottom: 20px;
     text-align: left;
 }

@@ -38,3 +38,37 @@ solamente cuando el campo es invalido. */
     font-size: 12px;
     padding-left: 12px;
 }
+
+.solicitud-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.solicitud-input-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+}
+
+.solicitud-campo input.con-icono{
+    padding-left: 45px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+}
+
+.solicitud-campo input.con-icono {
+    padding-left: 45px;
+    padding-right: 40px;
+}

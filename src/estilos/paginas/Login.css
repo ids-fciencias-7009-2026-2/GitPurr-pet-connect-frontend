@@ -118,7 +118,7 @@ de sus componentes y el espaciado entre ellos. */
 
 /* Define el estilo del boton de submit ubicado en la parte
 inferior de la tarjeta. Define estilos de fuente y de color. */
-.inicio-sesion-side button {
+.inicio-sesion-side button[type="submit"] {
     width: 100%;
     padding: 14px;
     background-color: var(--color-primary);
