@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { Mail, User } from "lucide-react"
+import { Mail, Lock} from "lucide-react"
 import { login } from "../api/servicioUsuario"
 import SolicitarCampo from "../componentes/SolicitarCampo"
 import "../estilos/paginas/Login.css"
@@ -36,6 +36,8 @@ function Login() {
         password: null,
         general: null,
     })
+
+    const [showPassword, setShowPassword] = useState(false)
 
     /** Expresion regular que delimita el formato del correo electronico. */
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -122,20 +124,21 @@ function Login() {
                             value={email}
                             onChange={e => {
                                 setEmail(e.target.value)
-                                setErrores(prev => ({...prev,general:null}))
+                                setErrores(prev => ({ ...prev, general: null }))
                             }}
-                            icono={<Mail size={20}/>}
+                            icono={<Mail size={20} />}
                             error={errores.email}
                         />
                         <SolicitarCampo
                             id="password"
                             etiqueta="Ingresa tu contraseña"
-                            tipo="password"
+                            tipo={showPassword ? "text" : "password"} 
                             placeholder="Contraseña"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
-                            icono={<User size={20}/>}
+                            icono={<Lock size={20} />}
                             error={errores.password}
+                            togglePassword={() => setShowPassword(!showPassword)}
                         />
                         {errores.general && <p className="mensaje-error">{errores.general}</p>}
                         <button type="submit">Iniciar Sesión</button>
