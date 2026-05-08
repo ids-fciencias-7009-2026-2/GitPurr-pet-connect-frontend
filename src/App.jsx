@@ -5,6 +5,7 @@ import Register from "./paginas/Register"
 import Profile from "./paginas/Profile"
 import Update from "./paginas/Update"
 import ProtectedRoute from "./componentes/ProtectedRoute"
+import RegisterAnimalito from "./paginas/RegisterAnimalito"
 
 function App() {
   return (
@@ -31,6 +32,12 @@ function App() {
         <Route path="/update" element={
           <ProtectedRoute>
             <Update />
+          </ProtectedRoute>
+        }/>
+
+        <Route path="/animalitos/register" element={
+          <ProtectedRoute>
+            <RegisterAnimalito />
           </ProtectedRoute>
         }/>
 
