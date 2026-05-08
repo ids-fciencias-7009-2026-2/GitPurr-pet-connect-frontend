@@ -7,3 +7,8 @@ export const registrarAnimalito = (animalito) => {
 export const obtenerAnimalitos = () => {
     return api.get("/animalitos").then((respuesta) => respuesta.data);
 };
+
+export const obtenerAnimalitoPorId = (id) => {
+    return api.get(`/animalitos/${id}`)
+        .then(res => res.data);
+};

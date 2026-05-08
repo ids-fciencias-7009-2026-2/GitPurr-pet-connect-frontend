@@ -6,6 +6,7 @@ import Profile from "./paginas/Profile"
 import Update from "./paginas/Update"
 import ProtectedRoute from "./componentes/ProtectedRoute"
 import RegisterAnimalito from "./paginas/RegisterAnimalito"
+import MascotaPerfil from "./paginas/MascotaPerfil";
 
 function App() {
   return (
@@ -20,6 +21,12 @@ function App() {
         <Route path="/home" element={
           <ProtectedRoute>
             <Home />
+          </ProtectedRoute>
+        }/>
+
+        <Route path="/mascota/:id" element={
+          <ProtectedRoute>
+            <MascotaPerfil />
           </ProtectedRoute>
         }/>
 

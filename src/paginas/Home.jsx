@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { me, logout } from "../api/servicioUsuario"
+import { obtenerAnimalitos } from "../api/servicioAnimalito"
 import "../estilos/paginas/Home.css"
 import Navbar from "../componentes/Navbar"
 import TarjetaMascota from "../componentes/TarjetaMascota"
@@ -25,12 +26,8 @@ function Home() {
     /** Almacena el filtro activo seleccionado */
     const [filtroActivo, setFiltroActivo] = useState('Todos')
 
-    /** Datos de ejemplo de mascotas disponibles para adopcion */
-    const mascotas = [
-        { id: 1, nombre: 'Alaska', raza: 'Husky Siberiano', ubicacion: 'Puebla, Mexico', edad: '4 años', sexo: 'Hembra', imagen: '/recursos/imagenes/pet-shop.png' },
-        { id: 2, nombre: 'Garfield', raza: 'Gato Naranja', ubicacion: 'Guadalajara, Mexico', edad: '2 años', sexo: 'Macho', imagen: '/recursos/imagenes/pet-shop.png' },
-        { id: 3, nombre: 'Chaparrito', raza: 'Pitbull', ubicacion: 'CDMX, Mexico', edad: '3 años', sexo: 'Macho', imagen: '/recursos/imagenes/pet-shop.png' },
-    ]
+    /** Mascotas disponibles para adopcion */
+    const [mascotas, setMascotas] = useState([])
 
     /**
      * Al montar el componente, obtiene la informacion del usuario
@@ -43,6 +40,13 @@ function Home() {
              sessionStorage.removeItem("token")
              navegacion("/login")
         })
+
+        obtenerAnimalitos()
+          .then(setMascotas)
+          .catch(error => {
+            console.error("Error al cargar mascotas:", error)
+          })
+
     }, [])
 
     /**
@@ -82,7 +86,14 @@ function Home() {
                 <p className="home-mascotas-subtitulo">{mascotas.length} mascotas esperando encontrar un hogar</p>
                 <div className="home-grid">
                     {mascotas.map(mascota => (
-                        <TarjetaMascota key={mascota.id} mascota={mascota} />
+                        <TarjetaMascota
+                            key={mascota.id}
+                            mascota={{
+                                ...mascota,
+                                imagen: mascota.fotoUrl || "/recursos/imagenes/default.jpg",
+                                ubicacion: mascota.codigoPostal
+                            }}
+                        />
                     ))}
                 </div>
             </section>
