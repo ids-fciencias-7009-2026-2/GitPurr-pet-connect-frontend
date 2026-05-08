@@ -49,6 +49,12 @@ function Navbar({ usuario, onLogout }) {
                                 <button style={{ marginBottom: '8px', width: '100%' }}>Mi Perfil</button>
                             </Link>
 
+                            <Link to="/animalitos/register" style={{ textDecoration: 'none' }}>
+                                <button style={{ marginBottom: '8px', width: '100%' }}>
+                                    Registrar Mascota
+                                </button>
+                            </Link>
+
                             <button onClick={onLogout}>Cerrar sesión</button>
                         </div>
                     )}
