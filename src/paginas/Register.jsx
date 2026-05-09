@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { PawPrint, Heart, Dog, Cat, Eye, EyeOff, Mail, User, Lock } from "lucide-react";
+import { PawPrint, Heart, Dog, Cat, Mail, User, Lock, MapPin } from "lucide-react";
 import { registro } from '../api/servicioUsuario';
 import SolicitarCampo from '../componentes/SolicitarCampo';
 import '../estilos/paginas/Register.css';
@@ -9,12 +9,14 @@ const Register = () => {
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
+  const [codigoPostal, setCodigoPostal] = useState(''); 
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({
     nombre: null,
     correo: null,
     password: null,
+    codigoPostal: null,
     general: null,
   })
   const [mensaje, setMensaje] = useState('');
@@ -28,6 +30,7 @@ const Register = () => {
       nombre: null,
       correo: null,
       password: null,
+      codigoPostal: null,
       general: null,
     }
 
@@ -41,6 +44,10 @@ const Register = () => {
 
     if(password.trim().length === 0) {
       newErrors.password = 'Por favor ingresa una contraseña válida'
+    }
+
+    if(codigoPostal.trim().length === 0) {
+      newErrors.codigoPostal = 'Por favor ingresa un código postal válido'
     }
 
     setErrors(newErrors)
@@ -58,11 +65,11 @@ const Register = () => {
     }
 
     try {
-      // Usamos la función de la API
       await registro({
         nombre: nombre,
         email: correo,
-        password: password
+        password: password,
+        codigoPostal: codigoPostal 
       });
 
       setMensaje('¡Registro exitoso! Redirigiendo al login...');
@@ -79,7 +86,6 @@ const Register = () => {
 
   return (
     <>
-      {/* Fondo decorativo */}
       <div className="decoraciones-fondo">
         <PawPrint className="icono-fondo paw-1" />
         <Heart className="icono-fondo heart-1" />
@@ -88,7 +94,6 @@ const Register = () => {
       </div>
 
       <main className="register-container">
-        {/* Header */}
         <div>
           <img
             src="/recursos/imagenes/pet-shop.png"
@@ -101,7 +106,6 @@ const Register = () => {
           </p>
         </div>
 
-        {/* Formulario (Card) */}
         <div className="register-card">
           <div className="register-card-bar"></div>
 
@@ -114,7 +118,6 @@ const Register = () => {
 
             <form onSubmit={handleSubmit}>
 
-              {/* Campos reutilizables */}
               <div className="form-group">
                 <SolicitarCampo
                   id="nombre"
@@ -155,14 +158,25 @@ const Register = () => {
                 />
               </div>
 
-              {/* Mensaje de éxito/error */}
+              <div className="form-group">
+                <SolicitarCampo
+                  id="codigoPostal"
+                  etiqueta="Código postal"
+                  tipo="text"
+                  placeholder="Ej. 06000"
+                  value={codigoPostal}
+                  onChange={(e) => setCodigoPostal(e.target.value)}
+                  error={errors.codigoPostal}
+                  icono={<MapPin size={20} />}
+                />
+              </div>
+
               {mensaje && (
                 <div className={`mensaje-alerta ${mensaje.includes('exitoso') ? 'mensaje-exito' : 'mensaje-error'}`}>
                   {mensaje}
                 </div>
               )}
 
-              {/* Botón Submit */}
               <button type="submit" disabled={isSubmitting} className="btn-submit">
                 {isSubmitting ? (
                   <>
