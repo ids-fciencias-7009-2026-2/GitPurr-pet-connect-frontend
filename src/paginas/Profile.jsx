@@ -153,6 +153,7 @@ function Profile() {
                   name="codigoPostal"
                   value={usuario.codigoPostal}
                   onChange={handleChange}
+                  maxLength="5"
                   placeholder="Tu CP para el mapa"
                   required
                 />

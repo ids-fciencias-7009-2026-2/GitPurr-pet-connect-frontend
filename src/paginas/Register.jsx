@@ -45,9 +45,11 @@ const Register = () => {
     if(password.trim().length === 0) {
       newErrors.password = 'Por favor ingresa una contraseña válida'
     }
-
-    if(codigoPostal.trim().length === 0) {
-      newErrors.codigoPostal = 'Por favor ingresa un código postal válido'
+    
+    const cpRegex = /^(0[1-9]|[1-9][0-9])[0-9]{3}$/;
+    
+    if(!cpRegex.test(codigoPostal)) {
+      newErrors.codigoPostal = 'Ingresa un CP válido (ej. entre 01000 y 99999)'
     }
 
     setErrors(newErrors)
