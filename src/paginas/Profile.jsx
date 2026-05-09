@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { me, update } from "../api/servicioUsuario";
-import { User, Mail, Lock, Camera, Heart, ShieldCheck, KeyRound } from "lucide-react"; 
+// Añadimos MapPin a las importaciones
+import { User, Mail, Lock, Camera, Heart, ShieldCheck, KeyRound, MapPin } from "lucide-react"; 
 import "../estilos/paginas/Profile.css"; 
 
 function Profile() {
-  const [usuario, setUsuario] = useState({ nombre: "", email: "", passwordOld: "", passwordNew: "" });
+  const [usuario, setUsuario] = useState({ nombre: "", email: "", codigoPostal: "", passwordOld: "", passwordNew: "" });
   const [mensaje, setMensaje] = useState({ texto: "", tipo: "" });
   const [cargando, setCargando] = useState(true);
   
@@ -15,7 +16,7 @@ function Profile() {
     const cargarPerfil = async () => {
       try {
         const datos = await me();
-        setUsuario({ nombre: datos.nombre, email: datos.email, passwordOld: "", passwordNew: "" });
+        setUsuario({ nombre: datos.nombre, email: datos.email, codigoPostal: datos.codigoPostal || "", passwordOld: "", passwordNew: "" });
       } catch (error) {
         console.error("Error al obtener el perfil:", error);
         setMensaje({ texto: "Error al cargar tu información. Verifica tu sesión.", tipo: "error" });
@@ -38,6 +39,7 @@ function Profile() {
       const datosActualizados = {
         nombre: usuario.nombre,
         email: usuario.email,
+        codigoPostal: usuario.codigoPostal
       };
       
       if (usuario.passwordNew.trim() !== "") {
@@ -53,7 +55,13 @@ function Profile() {
       
       setMensaje({ texto: "¡Perfil actualizado con éxito! Redirigiendo al inicio...", tipo: "exito" });
       
-      setUsuario({ nombre: respuesta.nombre, email: respuesta.email, passwordOld: "", passwordNew: "" }); 
+      setUsuario({ 
+          nombre: respuesta.nombre, 
+          email: respuesta.email, 
+          codigoPostal: respuesta.codigoPostal || usuario.codigoPostal, 
+          passwordOld: "", 
+          passwordNew: "" 
+      }); 
 
       setTimeout(() => {
         navigate("/home");
@@ -91,12 +99,6 @@ function Profile() {
           <p className="sidebar-role">
             <Heart size={16} color="#e74c3c" fill="#e74c3c" /> Amante de las mascotas
           </p>
-          <div className="sidebar-stats">
-            <div className="stat-item">
-              <ShieldCheck size={20} className="stat-icon" />
-              <span>Cuenta Verificada</span>
-            </div>
-          </div>
         </div>
 
         {/* PANEL DERECHO */}
@@ -141,7 +143,23 @@ function Profile() {
               </div>
             </div>
 
-            {/* SECCIÓN DE SEGURIDAD */}
+            <div className="form-group">
+              <label htmlFor="codigoPostal">Código postal</label>
+              <div className="input-with-icon">
+                <MapPin className="input-icon" size={20} />
+                <input
+                  type="text"
+                  id="codigoPostal"
+                  name="codigoPostal"
+                  value={usuario.codigoPostal}
+                  onChange={handleChange}
+                  maxLength="5"
+                  placeholder="Tu CP para el mapa"
+                  required
+                />
+              </div>
+            </div>
+
             <div style={{ marginTop: "10px", padding: "15px", backgroundColor: "#f8f9fa", borderRadius: "8px", border: "1px dashed #ced4da" }}>
                 <h4 style={{ margin: "0 0 15px 0", color: "#34495e", fontSize: "15px" }}>Cambio de Contraseña <span className="opcional">(Opcional)</span></h4>
                 
