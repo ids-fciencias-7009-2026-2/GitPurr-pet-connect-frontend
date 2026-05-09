@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Heart, MapPin, Calendar, Tag, HouseHeart, ShieldCheck, X, ArrowBigDown } from "lucide-react";
-import { obtenerAnimalitoPorId } from "../api/servicioAnimalito";
+import { obtenerAnimalitoPorId, expresarInteres } from "../api/servicioAnimalito";
 import "../estilos/paginas/MascotaPerfil.css";
 
 function MascotaPerfil() {
@@ -10,6 +10,7 @@ function MascotaPerfil() {
   const [mascota, setMascota] = useState(null);
   const [modalAbierto, setModalAbierto] = useState(false);
   const [confirmacionAbierta, setConfirmacionAbierta] = useState(false);
+  const [resultado, setResultado] = useState(null);
 
   /* encontramos a la mascota por su ID */
   useEffect(() => {
@@ -172,10 +173,15 @@ function MascotaPerfil() {
 
               <button
                 className="confirmar-btn"
-                onClick={() => {
-                  setConfirmacionAbierta(false);
-                  // ya que se hizo la petición al backend...
-                  alert("Correo enviado");
+                onClick={async () => {
+                  try {
+                    await expresarInteres(id);
+                    setConfirmacionAbierta(false);
+                    setResultado("exito");
+                  } catch (error) {
+                    setConfirmacionAbierta(false);
+                    setResultado("error");
+                  }
                 }}
               >
                 ¡Adelante!
@@ -185,6 +191,36 @@ function MascotaPerfil() {
 
           </div>
 
+        </div>
+      )}
+
+      {/* modal resultado */}
+      {resultado && (
+        <div className="confirmacion-overlay">
+          <div className="confirmacion-modal">
+            <h3>{resultado === "exito" ? "¡Correo enviado! 🐾" : "Algo salió mal 😿"}</h3>
+            <p>
+              {resultado === "exito"
+                ? "Correo mandado exitosamente, espera respuesta del dueño."
+                : "Hubo un problema al enviar el correo, intenta de nuevo."}
+            </p>
+            <div className="actions-confirmacion">
+              {resultado === "error" && (
+                <button
+                  className="confirmar-btn"
+                  onClick={() => {
+                    setResultado(null);
+                    setConfirmacionAbierta(true);
+                  }}
+                >
+                  Volver a intentar
+                </button>
+              )}
+              <button className="cancelar-btn" onClick={() => setResultado(null)}>
+                OK
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
