@@ -17,8 +17,6 @@ function RegisterAnimalito() {
         tamano: "",
         descripcion: "",
         codigoPostal: "",
-        latitudAprox: "",
-        longitudAprox: "",
         fotoUrl: ""
     });
 
@@ -47,8 +45,6 @@ function RegisterAnimalito() {
                 tamano: formulario.tamano,
                 descripcion: formulario.descripcion,
                 codigoPostal: formulario.codigoPostal,
-                latitudAprox: formulario.latitudAprox ? Number(formulario.latitudAprox) : null,
-                longitudAprox: formulario.longitudAprox ? Number(formulario.longitudAprox) : null,
                 fotoUrl: formulario.fotoUrl || "/recursos/imagenes/pet-shop.png"
             });
 
@@ -206,30 +202,6 @@ function RegisterAnimalito() {
                                     value={formulario.fotoUrl}
                                     onChange={handleChange}
                                     name="fotoUrl"
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <SolicitarCampo
-                                    id="latitudAprox"
-                                    etiqueta="Latitud aproximada"
-                                    tipo="number"
-                                    placeholder="Opcional"
-                                    value={formulario.latitudAprox}
-                                    onChange={handleChange}
-                                    name="latitudAprox"
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <SolicitarCampo
-                                    id="longitudAprox"
-                                    etiqueta="Longitud aproximada"
-                                    tipo="number"
-                                    placeholder="Opcional"
-                                    value={formulario.longitudAprox}
-                                    onChange={handleChange}
-                                    name="longitudAprox"
                                 />
                             </div>
 
