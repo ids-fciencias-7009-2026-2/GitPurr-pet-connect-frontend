@@ -52,7 +52,9 @@ export const me = () => {
  * @returns {Promise} Promesa con la confirmacion de cierre de sesion.
  */
 export const logout = async () => {
-    sessionStorage.removeItem("token");
+    api.post("/usuarios/logout").then(() => {
+        sessionStorage.removeItem("token")
+    })
 };
 
 /**
@@ -71,3 +73,7 @@ export const logout = async () => {
 export const update = (usuarioActualizado) => {
     return api.put("/usuarios", usuarioActualizado).then((respuesta) => respuesta.data);
 };
+
+export const ubicacion = () => {
+    return api.get("/usuarios/me/ubicacion").then(respuesta => respuesta.data);
+}

@@ -12,3 +12,7 @@ export const obtenerAnimalitoPorId = (id) => {
     return api.get(`/animalitos/${id}`)
         .then(res => res.data);
 };
+
+export const obtenerAnimalitosCercanos = () => {
+    return api.get("/animalitos/cercanos").then(respuesta => respuesta.data);
+};

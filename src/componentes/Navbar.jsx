@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../estilos/componentes/Navbar.css";
 
@@ -19,6 +20,8 @@ function Navbar({ usuario, onLogout }) {
     /** Controla si el dropdown del usuario esta abierto o cerrado */
     const [menuAbierto, setMenuAbierto] = useState(false);
 
+    const navigate = useNavigate();
+
     return (
         <nav className="navbar">
             <div className="navbar-logo">
@@ -35,6 +38,7 @@ function Navbar({ usuario, onLogout }) {
             </div>
 
             <div className="navbar-acciones">
+                <button className="btn-mapa" onClick={() => navigate("/mapa")}>Buscar en mapa</button>
                 <img src="/recursos/imagenes/corazon-navbar.png" alt="favoritos" className="navbar-icono" />
                 <img src="/recursos/imagenes/campana-navbar.png" alt="notificaciones" className="navbar-icono" />
                 <div className="navbar-usuario" onClick={() => setMenuAbierto(!menuAbierto)}>
