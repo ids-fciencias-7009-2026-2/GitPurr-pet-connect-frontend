@@ -16,3 +16,7 @@ export const obtenerAnimalitoPorId = (id) => {
 export const obtenerAnimalitosCercanos = () => {
     return api.get("/animalitos/cercanos").then(respuesta => respuesta.data);
 };
+
+export const expresarInteres = (animalitoId) => {
+    return api.post(`/animalitos/${animalitoId}/interes`).then((respuesta) => respuesta.data);
+};
