@@ -39,7 +39,12 @@ function Navbar({ usuario, onLogout }) {
 
             <div className="navbar-acciones">
                 <button className="btn-mapa" onClick={() => navigate("/mapa")}>Buscar en mapa</button>
-                <img src="/recursos/imagenes/corazon-navbar.png" alt="favoritos" className="navbar-icono" />
+                <img
+                    src="/recursos/imagenes/corazon-navbar.png"
+                    alt="favoritos"
+                    className="navbar-icono"
+                    onClick={() => navigate("/favoritos")}
+                />
                 <img src="/recursos/imagenes/campana-navbar.png" alt="notificaciones" className="navbar-icono" />
                 <div className="navbar-usuario" onClick={() => setMenuAbierto(!menuAbierto)}>
                     <img src="/recursos/imagenes/usuario-navbar.png" alt="usuario" className="navbar-icono" />

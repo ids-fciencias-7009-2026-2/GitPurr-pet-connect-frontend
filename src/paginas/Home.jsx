@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { me, logout } from "../api/servicioUsuario"
+import { me, logout, obtenerFavoritos } from "../api/servicioUsuario"
 import { obtenerAnimalitos } from "../api/servicioAnimalito"
 import "../estilos/paginas/Home.css"
 import Navbar from "../componentes/Navbar"
@@ -29,6 +29,9 @@ function Home() {
     /** Mascotas disponibles para adopcion */
     const [mascotas, setMascotas] = useState([])
 
+    /** IDs de las mascotas marcadas como favoritos */
+    const [favoritosIds, setFavoritosIds] = useState([])
+
     /**
      * Al montar el componente, obtiene la informacion del usuario
      * autenticado mediante el endpoint /usuarios/me.
@@ -47,6 +50,24 @@ function Home() {
             console.error("Error al cargar mascotas:", error)
           })
 
+    }, [])
+
+    /**
+     * Al montar el componente, se cargan las mascotas que
+     * el usuario tiene agregadas como favoritas.
+     */
+    useEffect(() => {
+        const cargarFavoritos =
+            async () => {
+                try {
+                    const misFavoritos = await obtenerFavoritos();
+                    const ids = misFavoritos.map(mascota => mascota.id)
+                    setFavoritosIds(ids)
+                } catch(error) {
+                    console.error("Error al cargar favoritos:", error)
+                }
+            }
+        cargarFavoritos()
     }, [])
 
     /**
@@ -93,6 +114,7 @@ function Home() {
                                 imagen: mascota.fotoUrl || "/recursos/imagenes/default.jpg",
                                 ubicacion: mascota.codigoPostal
                             }}
+                            inicialFavorito={favoritosIds.includes(mascota.id)}
                         />
                     ))}
                 </div>
@@ -102,3 +124,4 @@ function Home() {
 }
 
 export default Home
+

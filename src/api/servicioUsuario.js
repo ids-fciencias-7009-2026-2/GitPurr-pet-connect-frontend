@@ -74,6 +74,22 @@ export const update = (usuarioActualizado) => {
     return api.put("/usuarios", usuarioActualizado).then((respuesta) => respuesta.data);
 };
 
+
 export const ubicacion = () => {
     return api.get("/usuarios/me/ubicacion").then(respuesta => respuesta.data);
 }
+
+// obtener la lista de favoritos
+export const obtenerFavoritos = () => {
+    return api.get("/usuarios/favoritos").then((respuesta) => respuesta.data);
+};
+
+// marcar un animalito como favorito
+export const agregarFavorito = (animalitoId) => {
+    return api.post(`/usuarios/favoritos/${animalitoId}`).then((respuesta) => respuesta.data);
+};
+
+// eliminar a un animalito de favoritos
+export const eliminarFavorito = (animalitoId) => {
+    return api.delete(`/usuarios/favoritos/${animalitoId}`).then((respuesta) => respuesta.data);
+};
