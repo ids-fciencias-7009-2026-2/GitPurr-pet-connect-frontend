@@ -28,7 +28,7 @@ function MapaAnimalitos() {
 
                 const animalitosCercanos = await obtenerAnimalitos();
                 setAnimalitos(animalitosCercanos);
-            } catch(errror) {
+            } catch(error) {
                 console.log(error);
             }
         }
