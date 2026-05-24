@@ -34,6 +34,7 @@ function RegisterAnimalito() {
         nombre: "",
         edad: "",
         especie: "",
+        especieDetalle: "",
         raza: "",
         sexo: "",
         tamano: "",
@@ -62,6 +63,7 @@ function RegisterAnimalito() {
                 nombre: formulario.nombre,
                 edad: formulario.edad,
                 especie: formulario.especie,
+                especieDetalle: formulario.especie === "Otro" ? formulario.especieDetalle : null,
                 raza: formulario.raza,
                 sexo: formulario.sexo,
                 tamano: formulario.tamano,
@@ -163,6 +165,21 @@ function RegisterAnimalito() {
                                     <option value="Otro">Otro</option>
                                 </select>
                             </div>
+
+                            {/* Mostrar solo si seleccionó "Otro" */}
+                            {formulario.especie === "Otro" && (
+                                <div className="form-group">
+                                    <SolicitarCampo
+                                        id="especieDetalle"
+                                        etiqueta="Especifique el tipo de mascota"
+                                        tipo="text"
+                                        placeholder="Ej. Conejo, Ave, Tortuga..."
+                                        value={formulario.especieDetalle}
+                                        onChange={handleChange}
+                                        name="especieDetalle"
+                                    />
+                                </div>
+                            )}
 
                             <div className="form-group">
                                 <SolicitarCampo
