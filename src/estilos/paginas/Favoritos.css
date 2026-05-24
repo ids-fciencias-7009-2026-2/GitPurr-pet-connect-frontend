@@ -1,0 +1,95 @@
+/* Sobreescribe el body para que Favoritos no quede centrado */
+body:has(.pagina-favoritos) {
+    display: block;
+    align-items: unset;
+    justify-content: unset;
+}
+
+/* Contenedor principal */
+.pagina-favoritos {
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 70px;
+    padding-left: 64px;
+    padding-right: 64px;
+    padding-bottom: 48px;
+}
+
+/* Estila el título */
+.titulo-seccion {
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--color-text);
+    max-width: 600px;
+}
+
+/* Estila el grid de tarjetas de mascotas */
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+/* Estila el estado vacío: no hay ninguna mascota favorita aún */
+.estado-vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 50vh;
+    gap: 12px;
+    max-width: 450px;
+    margin: 40px auto 0 auto;
+}
+
+/* subítulo */
+.estado-vacio h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+}
+
+ /* sugerencia */
+.estado-vacio p {
+    font-size: 15px;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0 0 12px 0;
+}
+
+/* Boton de ver mascotas. */
+.btn-primario {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background-color 0.3s;
+}
+
+/* Hover del boton de ver mascotas. */
+.btn-primario:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    .pagina-favoritos {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .titulo-seccion {
+        font-size: 24px;
+    }
+
+}

@@ -25,7 +25,9 @@ function Navbar({ usuario, onLogout }) {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <img src="/recursos/imagenes/pet-shop.png" alt="logo" className="navbar-petshop" />
+                <Link to="/home">
+                    <img src="/recursos/imagenes/pet-shop.png" alt="logo" className="navbar-petshop" />
+                </Link>
                 <div className="navbar-logo-texto">
                     <span className="navbar-titulo">Pet Connect</span>
                     <span className="navbar-subtitulo">Cambie su vida para siempre</span>
@@ -39,7 +41,12 @@ function Navbar({ usuario, onLogout }) {
 
             <div className="navbar-acciones">
                 <button className="btn-mapa" onClick={() => navigate("/mapa")}>Buscar en mapa</button>
-                <img src="/recursos/imagenes/corazon-navbar.png" alt="favoritos" className="navbar-icono" />
+                <img
+                    src="/recursos/imagenes/corazon-navbar.png"
+                    alt="favoritos"
+                    className="navbar-icono"
+                    onClick={() => navigate("/favoritos")}
+                />
                 <img src="/recursos/imagenes/campana-navbar.png" alt="notificaciones" className="navbar-icono" />
                 <div className="navbar-usuario" onClick={() => setMenuAbierto(!menuAbierto)}>
                     <img src="/recursos/imagenes/usuario-navbar.png" alt="usuario" className="navbar-icono" />

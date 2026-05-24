@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { me, update } from "../api/servicioUsuario";
+import { logout, me, update } from "../api/servicioUsuario";
+import Navbar from "../componentes/Navbar";
 // Añadimos MapPin a las importaciones
-import { User, Mail, Lock, Camera, Heart, ShieldCheck, KeyRound, MapPin } from "lucide-react"; 
-import "../estilos/paginas/Profile.css"; 
+import { User, Mail, Lock, Camera, Heart, ShieldCheck, KeyRound, MapPin } from "lucide-react";
+import "../estilos/paginas/Profile.css";
 
 function Profile() {
   const [usuario, setUsuario] = useState({ nombre: "", email: "", codigoPostal: "", passwordOld: "", passwordNew: "" });
   const [mensaje, setMensaje] = useState({ texto: "", tipo: "" });
   const [cargando, setCargando] = useState(true);
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +28,11 @@ function Profile() {
     cargarPerfil();
   }, []);
 
+  const logoutHandler = async () => {
+    await logout
+    navigate("/login");
+  }
+
   const handleChange = (e) => {
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
   };
@@ -41,27 +47,27 @@ function Profile() {
         email: usuario.email,
         codigoPostal: usuario.codigoPostal
       };
-      
+
       if (usuario.passwordNew.trim() !== "") {
         if (usuario.passwordOld.trim() === "") {
-           setMensaje({ texto: "Debes ingresar tu contraseña actual para poder cambiarla.", tipo: "error" });
-           return; 
+          setMensaje({ texto: "Debes ingresar tu contraseña actual para poder cambiarla.", tipo: "error" });
+          return;
         }
         datosActualizados.passwordNew = usuario.passwordNew;
         datosActualizados.passwordOld = usuario.passwordOld;
       }
 
       const respuesta = await update(datosActualizados);
-      
+
       setMensaje({ texto: "¡Perfil actualizado con éxito! Redirigiendo al inicio...", tipo: "exito" });
-      
-      setUsuario({ 
-          nombre: respuesta.nombre, 
-          email: respuesta.email, 
-          codigoPostal: respuesta.codigoPostal || usuario.codigoPostal, 
-          passwordOld: "", 
-          passwordNew: "" 
-      }); 
+
+      setUsuario({
+        nombre: respuesta.nombre,
+        email: respuesta.email,
+        codigoPostal: respuesta.codigoPostal || usuario.codigoPostal,
+        passwordOld: "",
+        passwordNew: ""
+      });
 
       setTimeout(() => {
         navigate("/home");
@@ -70,9 +76,9 @@ function Profile() {
     } catch (error) {
       console.error("Error al actualizar:", error);
       if (error.response && error.response.status === 403) {
-         setMensaje({ texto: "La contraseña actual es incorrecta. Inténtalo de nuevo.", tipo: "error" });
+        setMensaje({ texto: "La contraseña actual es incorrecta. Inténtalo de nuevo.", tipo: "error" });
       } else {
-         setMensaje({ texto: "Hubo un error al intentar guardar los cambios.", tipo: "error" });
+        setMensaje({ texto: "Hubo un error al intentar guardar los cambios.", tipo: "error" });
       }
     }
   };
@@ -80,89 +86,92 @@ function Profile() {
   if (cargando) return <div className="profile-loading">Cargando tu perfil...</div>;
 
   return (
-    <div className="profile-container">
-      <div className="profile-wrapper">
-        
-        {/* PANEL IZQUIERDO */}
-        <div className="profile-sidebar">
-          <div className="profile-avatar-container">
-            <img 
-              src="/recursos/imagenes/usuario-navbar.png" 
-              alt="Avatar" 
-              className="profile-avatar"
-            />
-            <button className="avatar-edit-btn" title="Cambiar foto">
-              <Camera size={18} />
-            </button>
+    <>
+      <Navbar usuario = {usuario} onLogout = {logoutHandler}/>
+
+      <div className="profile-container">
+        <div className="profile-wrapper">
+
+          {/* PANEL IZQUIERDO */}
+          <div className="profile-sidebar">
+            <div className="profile-avatar-container">
+              <img
+                src="/recursos/imagenes/usuario-navbar.png"
+                alt="Avatar"
+                className="profile-avatar"
+              />
+              <button className="avatar-edit-btn" title="Cambiar foto">
+                <Camera size={18} />
+              </button>
+            </div>
+            <h3 className="sidebar-name">{usuario.nombre || "Usuario PetConnect"}</h3>
+            <p className="sidebar-role">
+              <Heart size={16} color="#e74c3c" fill="#e74c3c" /> Amante de las mascotas
+            </p>
           </div>
-          <h3 className="sidebar-name">{usuario.nombre || "Usuario PetConnect"}</h3>
-          <p className="sidebar-role">
-            <Heart size={16} color="#e74c3c" fill="#e74c3c" /> Amante de las mascotas
-          </p>
-        </div>
 
-        {/* PANEL DERECHO */}
-        <div className="profile-content">
-          <h2 className="profile-title">Configuración de Cuenta</h2>
-          <p className="profile-subtitle">Actualiza tu información personal y de seguridad.</p>
-          
-          {mensaje.texto && (
-            <div className={`profile-alert ${mensaje.tipo}`}>
-              {mensaje.texto}
-            </div>
-          )}
+          {/* PANEL DERECHO */}
+          <div className="profile-content">
+            <h2 className="profile-title">Configuración de Cuenta</h2>
+            <p className="profile-subtitle">Actualiza tu información personal y de seguridad.</p>
 
-          <form onSubmit={handleSubmit} className="profile-form">
-            <div className="form-group">
-              <label htmlFor="nombre">Nombre completo</label>
-              <div className="input-with-icon">
-                <User className="input-icon" size={20} />
-                <input
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  value={usuario.nombre}
-                  onChange={handleChange}
-                  required
-                />
+            {mensaje.texto && (
+              <div className={`profile-alert ${mensaje.tipo}`}>
+                {mensaje.texto}
               </div>
-            </div>
+            )}
 
-            <div className="form-group">
-              <label htmlFor="email">Correo electrónico</label>
-              <div className="input-with-icon">
-                <Mail className="input-icon" size={20} />
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={usuario.email}
-                  onChange={handleChange}
-                  required
-                />
+            <form onSubmit={handleSubmit} className="profile-form">
+              <div className="form-group">
+                <label htmlFor="nombre">Nombre completo</label>
+                <div className="input-with-icon">
+                  <User className="input-icon" size={20} />
+                  <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    value={usuario.nombre}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="form-group">
-              <label htmlFor="codigoPostal">Código postal</label>
-              <div className="input-with-icon">
-                <MapPin className="input-icon" size={20} />
-                <input
-                  type="text"
-                  id="codigoPostal"
-                  name="codigoPostal"
-                  value={usuario.codigoPostal}
-                  onChange={handleChange}
-                  maxLength="5"
-                  placeholder="Tu CP para el mapa"
-                  required
-                />
+              <div className="form-group">
+                <label htmlFor="email">Correo electrónico</label>
+                <div className="input-with-icon">
+                  <Mail className="input-icon" size={20} />
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={usuario.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div style={{ marginTop: "10px", padding: "15px", backgroundColor: "#f8f9fa", borderRadius: "8px", border: "1px dashed #ced4da" }}>
+              <div className="form-group">
+                <label htmlFor="codigoPostal">Código postal</label>
+                <div className="input-with-icon">
+                  <MapPin className="input-icon" size={20} />
+                  <input
+                    type="text"
+                    id="codigoPostal"
+                    name="codigoPostal"
+                    value={usuario.codigoPostal}
+                    onChange={handleChange}
+                    maxLength="5"
+                    placeholder="Tu CP para el mapa"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div style={{ marginTop: "10px", padding: "15px", backgroundColor: "#f8f9fa", borderRadius: "8px", border: "1px dashed #ced4da" }}>
                 <h4 style={{ margin: "0 0 15px 0", color: "#34495e", fontSize: "15px" }}>Cambio de Contraseña <span className="opcional">(Opcional)</span></h4>
-                
+
                 <div className="form-group" style={{ marginBottom: "15px" }}>
                   <label htmlFor="passwordOld">Contraseña Actual</label>
                   <div className="input-with-icon">
@@ -192,18 +201,19 @@ function Profile() {
                     />
                   </div>
                 </div>
-            </div>
+              </div>
 
-            <div className="form-actions">
-              <button type="submit" className="profile-button">
-                Guardar Cambios
-              </button>
-            </div>
-          </form>
+              <div className="form-actions">
+                <button type="submit" className="profile-button">
+                  Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
+
         </div>
-
       </div>
-    </div>
+    </>
   );
 }
 

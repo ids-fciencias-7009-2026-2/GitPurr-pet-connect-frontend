@@ -2,10 +2,11 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  min-height: 80vh;
+  min-height: 100%;
   background-color: #f4f6f9;
   font-family: 'Exo 2', sans-serif;
   padding: 40px 20px;
+  margin: 100px auto;
 }
 
 .profile-wrapper {

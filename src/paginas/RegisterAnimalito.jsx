@@ -1,12 +1,34 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PawPrint, Heart, Dog, Cat } from "lucide-react";
 import { registrarAnimalito } from "../api/servicioAnimalito";
+import { logout, me } from "../api/servicioUsuario";
 import SolicitarCampo from "../componentes/SolicitarCampo";
+import Navbar from "../componentes/Navbar";
 import "../estilos/paginas/Register.css";
 
 function RegisterAnimalito() {
     const navigate = useNavigate();
+
+    const [usuario,setUsuario] = useState(null);
+    
+    const logoutHandler = async () => {
+        await logout
+        navigate("/login");
+    }
+
+    useEffect(() => {
+        const cargarDatos = async () => {
+            try{
+                const usuarioActual = await me();
+                setUsuario(usuarioActual);
+            } catch(error) {
+                console.log(error);
+            }
+        }
+
+        cargarDatos
+    }, [])
 
     const [formulario, setFormulario] = useState({
         nombre: "",
@@ -71,6 +93,9 @@ function RegisterAnimalito() {
 
     return (
         <>
+
+            <Navbar usuario = {usuario} onLogout={logoutHandler}/>
+
             <div className="decoraciones-fondo">
                 <PawPrint className="icono-fondo paw-1" />
                 <Heart className="icono-fondo heart-1" />
