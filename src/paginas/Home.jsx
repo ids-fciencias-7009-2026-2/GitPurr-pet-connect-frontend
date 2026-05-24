@@ -70,6 +70,17 @@ function Home() {
         cargarFavoritos()
     }, [])
 
+    const mascotasFiltradas = mascotas.filter(mascota => {
+        if (filtroActivo === 'Todos') return true
+        if (filtroActivo === 'Perros') return mascota.especie?.toLowerCase() === 'perro'
+        if (filtroActivo === 'Gatos') return mascota.especie?.toLowerCase() === 'gato'
+        if (filtroActivo === 'Otros') {
+            const esp = mascota.especie?.toLowerCase()
+            return esp !== 'perro' && esp !== 'gato'
+        }
+        return true
+    })
+
     /**
      * Cierra la sesion del usuario y lo redirige al login.
      */
@@ -104,9 +115,9 @@ function Home() {
             {/* Seccion de mascotas disponibles */}
             <section className="home-mascotas">
                 <h2 className="home-mascotas-titulo">Mascotas disponibles</h2>
-                <p className="home-mascotas-subtitulo">{mascotas.length} mascotas esperando encontrar un hogar</p>
+                <p className="home-mascotas-subtitulo">{mascotasFiltradas.length} mascotas esperando encontrar un hogar</p>
                 <div className="home-grid">
-                    {mascotas.map(mascota => (
+                    {mascotasFiltradas.map(mascota => (
                         <TarjetaMascota
                             key={mascota.id}
                             mascota={{
