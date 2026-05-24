@@ -25,7 +25,9 @@ function Navbar({ usuario, onLogout }) {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <img src="/recursos/imagenes/pet-shop.png" alt="logo" className="navbar-petshop" />
+                <Link to="/home">
+                    <img src="/recursos/imagenes/pet-shop.png" alt="logo" className="navbar-petshop" />
+                </Link>
                 <div className="navbar-logo-texto">
                     <span className="navbar-titulo">Pet Connect</span>
                     <span className="navbar-subtitulo">Cambie su vida para siempre</span>

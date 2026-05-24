@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { FaMapPin } from "react-icons/fa6";
 import { Heart, MapPin, Calendar, Tag, HouseHeart, ShieldCheck, X, ArrowBigDown } from "lucide-react";
 import { obtenerAnimalitoPorId, expresarInteres } from "../api/servicioAnimalito";
+import { me, logout } from "../api/servicioUsuario";
+import Navbar from "../componentes/Navbar";
 import "../estilos/paginas/MascotaPerfil.css";
 
 function MascotaPerfil() {
@@ -12,12 +15,19 @@ function MascotaPerfil() {
   const [confirmacionAbierta, setConfirmacionAbierta] = useState(false);
   const [resultado, setResultado] = useState(null);
 
+  const [usuario, setUsuario] = useState(null);
+
+  const navigate = useNavigate();
+
   /* encontramos a la mascota por su ID */
   useEffect(() => {
     const cargarMascota = async () => {
       try {
         const data = await obtenerAnimalitoPorId(id);
         setMascota(data);
+
+        const usuarioActual = await me();
+        setUsuario(usuarioActual);
       } catch (error) {
         console.error("Error al cargar mascota:", error);
 
@@ -31,12 +41,30 @@ function MascotaPerfil() {
     cargarMascota();
   }, [id]);
 
+  const logoutHandler = async () => {
+    await logout
+    navigate("/login");
+  }
+
   if (!mascota) return <p className="mascota-loading">Cargando...</p>;
 
   /* Imagen de la mascota */
   const imagen = mascota.fotoUrl || "/recursos/imagenes/default.jpg";
 
-  return (
+  const datosMascota = () => navigate("/mapa", {
+    state: {
+      coordenadas: [
+        mascota.latitudAprox,
+        mascota.longitudAprox
+      ],
+      mascotaSeleccionada: mascota
+    }
+  })
+
+return (
+  <>
+    <Navbar usuario={usuario} onLogout={logoutHandler} />
+
     <div className="mascota-container">
       <div className="mascota-wrapper">
 
@@ -119,10 +147,17 @@ function MascotaPerfil() {
 
           <div className="actions-mascota">
             <button
-              className="adoptar-button"
+              className="animalito-btn adoptar-button"
               onClick={() => setConfirmacionAbierta(true)}
             >
               Me interesa <Heart size={16} color="#e74c3c" fill="#e74c3c" />
+            </button>
+
+            <button
+              className="animalito-btn mostrar-mapa-btn"
+              onClick={() => datosMascota()}
+            >
+              Mostrar en el mapa <FaMapPin size={16} color="#BF0413" />
             </button>
           </div>
 
@@ -225,7 +260,8 @@ function MascotaPerfil() {
       )}
 
     </div>
-  );
+  </>
+);
 }
 
 export default MascotaPerfil;
