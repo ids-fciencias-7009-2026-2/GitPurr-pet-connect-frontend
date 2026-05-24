@@ -8,6 +8,7 @@ import ProtectedRoute from "./componentes/ProtectedRoute"
 import RegisterAnimalito from "./paginas/RegisterAnimalito"
 import MascotaPerfil from "./paginas/MascotaPerfil";
 import MapaAnimalitos from "./paginas/MapaAnimalitos";
+import Favoritos from "./paginas/Favoritos"
 
 function App() {
   return (
@@ -52,6 +53,12 @@ function App() {
         <Route path="/mapa" element={
           <ProtectedRoute>
               <MapaAnimalitos/>
+          </ProtectedRoute>
+        }/>
+
+        <Route path="/favoritos" element={
+          <ProtectedRoute>
+              <Favoritos/>
           </ProtectedRoute>
         }/>
 

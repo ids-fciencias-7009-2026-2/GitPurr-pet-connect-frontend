@@ -1,6 +1,8 @@
 import "../estilos/componentes/TarjetaMascota.css"
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import { agregarFavorito, eliminarFavorito } from "../api/servicioUsuario"
+import { Heart } from "lucide-react";
 /**
  * Componente que muestra la informacion de una mascota disponible para adopcion.
  *
@@ -16,8 +18,32 @@ import { useNavigate } from "react-router-dom";
  * @param {string} mascota.imagen - Ruta de la imagen de la mascota.
  * @returns {JSX.Element} Tarjeta con la informacion de la mascota.
  */
-function TarjetaMascota({ mascota }) {
+function TarjetaMascota({ mascota, inicialFavorito }) {
     const navigate = useNavigate();
+    const [favorito, setFavorito] = useState(inicialFavorito || false);
+    // para evitar muchos clicks rápidos mientras el backend está procesando el reqeust
+    const [procesando, setProcesando] = useState(false);
+
+    const favoritoClick = async () => {
+
+        if(procesando) return;
+        setProcesando(true);
+
+        try {
+            if(favorito) {
+                await eliminarFavorito(mascota.id);
+                setFavorito(false);
+            } else {
+                await agregarFavorito(mascota.id);
+                setFavorito(true);
+            }
+        } catch(error) {
+            console.error("Error al agrear o eliminar favorito:", error);
+        } finally {
+            setProcesando(false);
+        }
+    };
+
     return (
         <div className="tarjeta-mascota">
             <div className="tarjeta-imagen-contenedor">
@@ -26,8 +52,8 @@ function TarjetaMascota({ mascota }) {
                   alt={mascota.nombre}
                   className="tarjeta-imagen"
                 />
-                <button className="tarjeta-favorito">
-                    <img src="/recursos/imagenes/corazon-navbar.png" alt="favorito" className="tarjeta-favorito-icono" />
+                <button className="tarjeta-favorito" onClick={favoritoClick} disabled={procesando}>
+                    {favorito ? <Heart size={18} color="#000000" fill="#e74c3c" /> : <Heart size={18} color="#000000" />}
                 </button>
             </div>
             <div className="tarjeta-info">
