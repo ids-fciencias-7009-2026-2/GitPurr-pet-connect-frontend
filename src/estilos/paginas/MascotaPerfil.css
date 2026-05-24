@@ -96,7 +96,7 @@
 
 .mascota-info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, 1fr);
   gap: 18px;
   margin-bottom: 35px;
 }
@@ -150,11 +150,11 @@
 
 .actions-mascota {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 30px;
 }
 
-.adoptar-button {
+.animalito-btn {
   padding: 14px 30px;
   background-color: #F5A623;
   color: white;
@@ -167,7 +167,15 @@
   font-family: 'Exo 2', sans-serif;
 }
 
-.adoptar-button:hover {
+.adoptar-button {
+  margin-right: 4px;
+}
+
+.mostar-mapa-btn {
+  margin-left: 4px;
+}
+
+.animalito-btn:hover {
   background-color: #C97B0E;
 }
 
