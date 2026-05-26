@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import { me, logout, obtenerFavoritos } from "../api/servicioUsuario"
 import "../estilos/paginas/Home.css"
@@ -31,6 +31,9 @@ function Home() {
 
     /** IDs de las mascotas marcadas como favoritos */
     const [favoritosIds, setFavoritosIds] = useState([])
+    
+    /** Estado para saber si el sistema está buscando */
+    const [cargando, setCargando] = useState(false)
 
     /**
      * Al montar el componente, obtiene la informacion del usuario
@@ -44,11 +47,13 @@ function Home() {
              navegacion("/login")
         })
 
+        setCargando(true)
         obtenerAnimalitos()
           .then(setMascotas)
           .catch(error => {
             console.error("Error al cargar mascotas:", error)
           })
+          .finally(() => setCargando(false))
 
     }, [])
 
@@ -89,23 +94,26 @@ function Home() {
         navegacion('/login')
     }
     
-    const handleBuscar = (palabraClave) => {
-        // Si borraron el texto y buscaron vacío, cargamos todos de nuevo
+    const handleBuscar = useCallback((palabraClave) => {
+        setCargando(true);
+
         if (!palabraClave || palabraClave.trim() === "") {
-            obtenerAnimalitos().then(setMascotas).catch(console.error);
+            obtenerAnimalitos()
+                .then(setMascotas)
+                .catch(console.error)
+                .finally(() => setCargando(false));
             return;
         }
 
-        // Si escribieron algo, llamamos a nuestro nuevo endpoint
         buscarAnimalitosPorPalabraClave(palabraClave)
             .then((resultados) => {
                 setMascotas(resultados);
             })
             .catch(error => {
                 console.error("Error en la búsqueda:", error);
-                // Opcional: mostrar un mensajito de que no hubo resultados
-            });
-    };
+            })
+            .finally(() => setCargando(false));
+    }, []);
 
     return (
         <div className="pagina-home">
@@ -129,28 +137,35 @@ function Home() {
                     </button>
                 ))}
             </section>
-
             {/* Seccion de mascotas disponibles */}
             <section className="home-mascotas">
                 <h2 className="home-mascotas-titulo">Mascotas disponibles</h2>
                 <p className="home-mascotas-subtitulo">{mascotasFiltradas.length} mascotas esperando encontrar un hogar</p>
                 <div className="home-grid">
-                    {mascotasFiltradas.map(mascota => (
-                        <TarjetaMascota
-                            key={mascota.id}
-                            mascota={{
-                                ...mascota,
-                                imagen: mascota.fotoUrl || "/recursos/imagenes/default.jpg",
-                                ubicacion: mascota.codigoPostal
-                            }}
-                            inicialFavorito={favoritosIds.includes(mascota.id)}
-                        />
-                    ))}
+                    {cargando ? (
+                        <div className="spinner" style={{ gridColumn: "1 / -1", margin: "50px auto" }}></div>
+                    ) : mascotasFiltradas.length === 0 ? (
+                        <div style={{ textAlign: "center", gridColumn: "1 / -1", padding: "50px 20px" }}>
+                            <h3>No encontramos peluditos con esa búsqueda 🐾</h3>
+                            <p style={{ color: "#666" }}>Intenta con otras palabras o limpia el buscador.</p>
+                        </div>
+                    ) : (
+                        mascotasFiltradas.map(mascota => (
+                            <TarjetaMascota
+                                key={mascota.id}
+                                mascota={{
+                                    ...mascota,
+                                    imagen: mascota.fotoUrl || "/recursos/imagenes/default.jpg",
+                                    ubicacion: mascota.codigoPostal
+                                }}
+                                inicialFavorito={favoritosIds.includes(mascota.id)}
+                            />
+                        ))
+                    )}
                 </div>
             </section>
         </div>
     )
 }
-
 export default Home
 

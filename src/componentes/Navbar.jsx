@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../estilos/componentes/Navbar.css";
@@ -23,16 +23,23 @@ function Navbar({ usuario, onLogout, onBuscar }) {
 
     const navigate = useNavigate();
 
-    const handleBusqueda = (e) => {
-        if (!e || e.key === 'Enter') {
+	const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
             if (onBuscar) {
                 onBuscar(textoBusqueda);
             }
         }
     };
 
+    const limpiarBusqueda = () => {
+        setTextoBusqueda("");
+        if (onBuscar) {
+            onBuscar(""); 
+        }
+    };
+
     return (
-        <nav className="navbar">
+        <nav className="navbar">	
             <div className="navbar-logo">
                 <Link to="/home">
                     <img src="/recursos/imagenes/pet-shop.png" alt="logo" className="navbar-petshop" />
@@ -42,11 +49,39 @@ function Navbar({ usuario, onLogout, onBuscar }) {
                     <span className="navbar-subtitulo">Cambie su vida para siempre</span>
                 </div>
             </div>
-
-            <div className="navbar-busqueda">
-                <img src="/recursos/imagenes/lupa-navbar.png" alt="lupa" className="navbar-lupa" onClick={() => handleBusqueda()} style={{ cursor: "pointer" }} />
+            
+            <div className="navbar-busqueda" style={{ position: "relative" }}>
+                <img 
+                    src="/recursos/imagenes/lupa-navbar.png" 
+                    alt="lupa" 
+                    className="navbar-lupa" 
+                />
                 <input 
-                    type="text" placeholder="Buscar mascotas" value={textoBusqueda} onChange={(e) => setTextoBusqueda(e.target.value)} onKeyDown={handleBusqueda} />
+                    type="text" 
+                    placeholder="Buscar mascotas..." 
+                    value={textoBusqueda}
+                    onChange={(e) => setTextoBusqueda(e.target.value)}
+                    onKeyDown={handleKeyDown} 
+                    style={{ paddingRight: "30px" }} 
+                />
+                {textoBusqueda && (
+                    <button 
+                        onClick={limpiarBusqueda}
+                        style={{
+                            position: "absolute",
+                            right: "10px",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            fontSize: "14px",
+                            color: "#888"
+                        }}
+                    >
+                        ✖
+                    </button>
+                )}
             </div>
 
             <div className="navbar-acciones">
