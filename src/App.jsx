@@ -9,6 +9,7 @@ import RegisterAnimalito from "./paginas/RegisterAnimalito"
 import MascotaPerfil from "./paginas/MascotaPerfil";
 import MapaAnimalitos from "./paginas/MapaAnimalitos";
 import Favoritos from "./paginas/Favoritos"
+import Notificaciones from "./paginas/Notificaciones"
 
 function App() {
   return (
@@ -59,6 +60,12 @@ function App() {
         <Route path="/favoritos" element={
           <ProtectedRoute>
               <Favoritos/>
+          </ProtectedRoute>
+        }/>
+
+        <Route path="/notificaciones" element={
+          <ProtectedRoute>
+              <Notificaciones/>
           </ProtectedRoute>
         }/>
 

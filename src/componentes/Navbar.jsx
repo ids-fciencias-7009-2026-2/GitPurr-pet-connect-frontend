@@ -92,7 +92,12 @@ function Navbar({ usuario, onLogout, onBuscar }) {
                     className="navbar-icono"
                     onClick={() => navigate("/favoritos")}
                 />
-                <img src="/recursos/imagenes/campana-navbar.png" alt="notificaciones" className="navbar-icono" />
+                <img
+                    src="/recursos/imagenes/campana-navbar.png"
+                    alt="notificaciones"
+                    className="navbar-icono"
+                    onClick={() => navigate("/notificaciones")}
+                />
                 <div className="navbar-usuario" onClick={() => setMenuAbierto(!menuAbierto)}>
                     <img src="/recursos/imagenes/usuario-navbar.png" alt="usuario" className="navbar-icono" />
                     {menuAbierto && (
