@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { me, logout, obtenerFavoritos } from "../api/servicioUsuario"
-import { obtenerAnimalitos } from "../api/servicioAnimalito"
 import "../estilos/paginas/Home.css"
 import Navbar from "../componentes/Navbar"
 import TarjetaMascota from "../componentes/TarjetaMascota"
+import { obtenerAnimalitos, buscarAnimalitosPorPalabraClave } from "../api/servicioAnimalito"
 
 /**
  * Pagina principal de la aplicacion.
@@ -79,7 +79,7 @@ function Home() {
             return esp !== 'perro' && esp !== 'gato'
         }
         return true
-    })
+    })	
 
     /**
      * Cierra la sesion del usuario y lo redirige al login.
@@ -88,10 +88,28 @@ function Home() {
         await logout()
         navegacion('/login')
     }
+    
+    const handleBuscar = (palabraClave) => {
+        // Si borraron el texto y buscaron vacío, cargamos todos de nuevo
+        if (!palabraClave || palabraClave.trim() === "") {
+            obtenerAnimalitos().then(setMascotas).catch(console.error);
+            return;
+        }
+
+        // Si escribieron algo, llamamos a nuestro nuevo endpoint
+        buscarAnimalitosPorPalabraClave(palabraClave)
+            .then((resultados) => {
+                setMascotas(resultados);
+            })
+            .catch(error => {
+                console.error("Error en la búsqueda:", error);
+                // Opcional: mostrar un mensajito de que no hubo resultados
+            });
+    };
 
     return (
         <div className="pagina-home">
-            <Navbar usuario={usuario} onLogout={handleLogout} />
+            <Navbar usuario={usuario} onLogout={handleLogout} onBuscar={handleBuscar} />
 
             {/* Seccion hero con titulo y subtitulo sobre fondo naranja */}
             <section className="home-hero">

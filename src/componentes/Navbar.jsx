@@ -16,11 +16,20 @@ import "../estilos/componentes/Navbar.css";
  * @returns {JSX.Element} Barra de navegacion fija con logo, busqueda, 
  * iconos de accion y menu de usuario.
  */
-function Navbar({ usuario, onLogout }) {
-    /** Controla si el dropdown del usuario esta abierto o cerrado */
+function Navbar({ usuario, onLogout, onBuscar }) {
     const [menuAbierto, setMenuAbierto] = useState(false);
+    
+    const [textoBusqueda, setTextoBusqueda] = useState("");
 
     const navigate = useNavigate();
+
+    const handleBusqueda = (e) => {
+        if (!e || e.key === 'Enter') {
+            if (onBuscar) {
+                onBuscar(textoBusqueda);
+            }
+        }
+    };
 
     return (
         <nav className="navbar">
@@ -35,8 +44,9 @@ function Navbar({ usuario, onLogout }) {
             </div>
 
             <div className="navbar-busqueda">
-                <img src="/recursos/imagenes/lupa-navbar.png" alt="lupa" className="navbar-lupa" />
-                <input type="text" placeholder="Buscar mascotas" />
+                <img src="/recursos/imagenes/lupa-navbar.png" alt="lupa" className="navbar-lupa" onClick={() => handleBusqueda()} style={{ cursor: "pointer" }} />
+                <input 
+                    type="text" placeholder="Buscar mascotas" value={textoBusqueda} onChange={(e) => setTextoBusqueda(e.target.value)} onKeyDown={handleBusqueda} />
             </div>
 
             <div className="navbar-acciones">
