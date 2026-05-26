@@ -21,6 +21,9 @@ export const expresarInteres = (animalitoId) => {
     return api.post(`/animalitos/${animalitoId}/interes`).then((respuesta) => respuesta.data);
 };
 
+export const buscarAnimalitosPorPalabraClave = (palabraClave) => {
+    return api.get(`/animalitos/buscar?q=${palabraClave}`).then((respuesta) => respuesta.data);
+};
 export const obtenerNotificaciones = () => {
     return api.get("/animalitos/notificaciones").then((respuesta) => respuesta.data);
 };
