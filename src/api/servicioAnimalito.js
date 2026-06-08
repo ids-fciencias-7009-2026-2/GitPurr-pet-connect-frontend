@@ -27,3 +27,18 @@ export const buscarAnimalitosPorPalabraClave = (palabraClave) => {
 export const obtenerNotificaciones = () => {
     return api.get("/animalitos/notificaciones").then((respuesta) => respuesta.data);
 };
+
+export const obtenerMisPublicaciones = () => {
+    return api.get("/animalitos/mis-publicaciones")
+        .then((respuesta) => respuesta.data);
+};
+
+export const obtenerMisIntereses = () => {
+    return api.get("/animalitos/mis-intereses")
+        .then((respuesta) => respuesta.data);
+};
+
+export const marcarAnimalitoComoAdoptado = (animalitoId) => {
+    return api.patch(`/animalitos/${animalitoId}/adoptado`)
+        .then((respuesta) => respuesta.data);
+};
