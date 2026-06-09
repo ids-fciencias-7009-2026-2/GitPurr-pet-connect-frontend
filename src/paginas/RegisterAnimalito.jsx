@@ -13,7 +13,7 @@ function RegisterAnimalito() {
     const [usuario,setUsuario] = useState(null);
     
     const logoutHandler = async () => {
-        await logout
+        await logout();
         navigate("/login");
     }
 
@@ -27,7 +27,7 @@ function RegisterAnimalito() {
             }
         }
 
-        cargarDatos
+        cargarDatos();
     }, [])
 
     const [formulario, setFormulario] = useState({
