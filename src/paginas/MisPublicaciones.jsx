@@ -5,6 +5,7 @@ import { obtenerMisPublicaciones } from "../api/servicioAnimalito";
 import { me, logout } from "../api/servicioUsuario";
 import { useNavigate } from "react-router-dom";
 import "../estilos/paginas/Favoritos.css";
+import PageHeader from "../componentes/PageHeader";
 
 function MisPublicaciones() {
     const [usuario, setUsuario] = useState(null);
@@ -44,8 +45,14 @@ function MisPublicaciones() {
         <>
             <Navbar usuario={usuario} onLogout={logoutHandler} />
 
+            <Navbar usuario={usuario} onLogout={logoutHandler} />
+
+            <PageHeader
+                titulo="Mis publicaciones"
+                subtitulo="Consulta los animalitos que has publicado para adopción"
+            />
+
             <main className="pagina-favoritos">
-                <h1 className="titulo-seccion">Mis publicaciones</h1>
 
                 {publicaciones.length === 0 ? (
                     <div className="estado-vacio">

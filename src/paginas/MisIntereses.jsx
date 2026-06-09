@@ -5,6 +5,7 @@ import { obtenerMisIntereses } from "../api/servicioAnimalito";
 import { me, logout } from "../api/servicioUsuario";
 import { useNavigate } from "react-router-dom";
 import "../estilos/paginas/Favoritos.css";
+import PageHeader from "../componentes/PageHeader";
 
 function MisIntereses() {
     const [usuario, setUsuario] = useState(null);
@@ -44,8 +45,12 @@ function MisIntereses() {
         <>
             <Navbar usuario={usuario} onLogout={logoutHandler} />
 
+            <PageHeader
+                titulo="Mis intereses"
+                subtitulo="Consulta los animalitos por los que has mostrado interés"
+            />
+
             <main className="pagina-favoritos">
-                <h1 className="titulo-seccion">Mis intereses</h1>
 
                 {intereses.length === 0 ? (
                     <div className="estado-vacio">

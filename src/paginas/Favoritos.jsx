@@ -5,6 +5,7 @@ import TarjetaMascota from "../componentes/TarjetaMascota"
 import "../estilos/paginas/Favoritos.css"
 import Navbar from "../componentes/Navbar";
 import { me, logout } from "../api/servicioUsuario";
+import PageHeader from "../componentes/PageHeader";
 
 /**
  * Pagina de las mascotas favoritas del usuario.
@@ -60,8 +61,12 @@ function Favoritos() {
         <>
             <Navbar usuario={usuario} onLogout={logoutHandler} />
 
+            <PageHeader
+                titulo="Mis mascotas favoritas"
+                subtitulo="Consulta las mascotas que guardaste como favoritas"
+            />
+
             <main className="pagina-favoritos">
-                <h1 className="titulo-seccion">Mis mascotas favoritas</h1>
 
                 {mascotasFavoritas.length === 0 ? (
                     <div className="estado-vacio">
