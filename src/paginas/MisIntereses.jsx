@@ -6,19 +6,22 @@ import { me, logout } from "../api/servicioUsuario";
 import { useNavigate } from "react-router-dom";
 import "../estilos/paginas/Favoritos.css";
 import PageHeader from "../componentes/PageHeader";
+import { obtenerFavoritos } from "../api/servicioUsuario";
 
 function MisIntereses() {
     const [usuario, setUsuario] = useState(null);
     const [intereses, setIntereses] = useState([]);
     const [cargando, setCargando] = useState(true);
     const navigate = useNavigate();
+    const [favoritosIds, setFavoritosIds] = useState([]);
 
     useEffect(() => {
         const cargarDatos = async () => {
             try {
                 const usuarioActual = await me();
                 const misIntereses = await obtenerMisIntereses();
-
+                const favoritos = await obtenerFavoritos();
+                setFavoritosIds(favoritos.map((mascota) => mascota.id));
                 setUsuario(usuarioActual);
                 setIntereses(misIntereses);
             } catch (error) {
@@ -63,7 +66,7 @@ function MisIntereses() {
                             <TarjetaMascota
                                 key={mascota.id}
                                 mascota={mascota}
-                                inicialFavorito={true}
+                                inicialFavorito={favoritosIds.includes(mascota.id)}
                             />
                         ))}
                     </div>
