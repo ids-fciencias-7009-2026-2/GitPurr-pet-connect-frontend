@@ -105,9 +105,21 @@ function Navbar({ usuario, onLogout, onBuscar }) {
                             <p className="navbar-nombre">{usuario?.nombre ?? 'Usuario'}</p>
                             <p className="navbar-email">{usuario?.email ?? ''}</p>
                             <hr />
-                            
+
                             <Link to="/profile" style={{ textDecoration: 'none' }}>
                                 <button style={{ marginBottom: '8px', width: '100%' }}>Mi Perfil</button>
+                            </Link>
+
+                            <Link to="/mis-publicaciones" style={{ textDecoration: 'none' }}>
+                                <button style={{ marginBottom: '8px', width: '100%' }}>
+                                    Mis Publicaciones
+                                </button>
+                            </Link>
+
+                            <Link to="/mis-intereses" style={{ textDecoration: 'none' }}>
+                                <button style={{ marginBottom: '8px', width: '100%' }}>
+                                    Mis Intereses
+                                </button>
                             </Link>
 
                             <Link to="/animalitos/register" style={{ textDecoration: 'none' }}>

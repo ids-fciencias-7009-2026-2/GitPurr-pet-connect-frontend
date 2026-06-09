@@ -5,15 +5,11 @@ import Navbar from "../componentes/Navbar";
 // Añadimos MapPin a las importaciones
 import { User, Mail, Lock, Camera, Heart, ShieldCheck, KeyRound, MapPin } from "lucide-react";
 import "../estilos/paginas/Profile.css";
-import TarjetaMascota from "../componentes/TarjetaMascota";
-import { obtenerMisPublicaciones, obtenerMisIntereses } from "../api/servicioAnimalito";
 
 function Profile() {
   const [usuario, setUsuario] = useState({ nombre: "", email: "", codigoPostal: "", passwordOld: "", passwordNew: "" });
   const [mensaje, setMensaje] = useState({ texto: "", tipo: "" });
   const [cargando, setCargando] = useState(true);
-  const [misPublicaciones, setMisPublicaciones] = useState([]);
-  const [misIntereses, setMisIntereses] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,19 +25,6 @@ function Profile() {
       }
     };
     cargarPerfil();
-    const cargarAnimalitosPerfil = async () => {
-      try {
-        const publicaciones = await obtenerMisPublicaciones();
-        const intereses = await obtenerMisIntereses();
-
-        setMisPublicaciones(publicaciones);
-        setMisIntereses(intereses);
-      } catch (error) {
-        console.error("Error al cargar animalitos del perfil:", error);
-      }
-    };
-
-    cargarAnimalitosPerfil();
   }, []);
 
   const logoutHandler = async () => {
@@ -227,45 +210,6 @@ function Profile() {
                   </button>
                 </div>
               </form>
-
-              <div className="profile-seccion-animalitos">
-                <h2 className="profile-title">Animalitos que he publicado</h2>
-
-                {misPublicaciones.length === 0 ? (
-                    <p className="profile-subtitle">Aún no has publicado animalitos.</p>
-                ) : (
-                    <div className="profile-grid-animalitos">
-                      {misPublicaciones.map((mascota) => (
-                          <TarjetaMascota
-                              key={mascota.id}
-                              mascota={mascota}
-                              mostrarFavorito={false}
-                              mostrarEstado={true}
-                          />
-                      ))}
-                    </div>
-                )}
-              </div>
-
-              <div className="profile-seccion-animalitos">
-                <h2 className="profile-title">Animalitos que me interesan</h2>
-
-                {misIntereses.length === 0 ? (
-                    <p className="profile-subtitle">
-                      Aún no has mostrado interés por ningún animalito disponible.
-                    </p>
-                ) : (
-                    <div className="profile-grid-animalitos">
-                      {misIntereses.map((mascota) => (
-                          <TarjetaMascota
-                              key={mascota.id}
-                              mascota={mascota}
-                              inicialFavorito={true}
-                          />
-                      ))}
-                    </div>
-                )}
-              </div>
             </div>
           </div>
         </div>

@@ -159,6 +159,9 @@ function Home() {
                                     ubicacion: mascota.codigoPostal
                                 }}
                                 inicialFavorito={favoritosIds.includes(mascota.id)}
+                                mostrarFavorito={
+                                    usuario?.id?.toString() !== mascota.usuarioId?.toString()
+                                }
                             />
                         ))
                     )}
