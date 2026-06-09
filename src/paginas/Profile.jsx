@@ -5,12 +5,15 @@ import Navbar from "../componentes/Navbar";
 // Añadimos MapPin a las importaciones
 import { User, Mail, Lock, Camera, Heart, ShieldCheck, KeyRound, MapPin } from "lucide-react";
 import "../estilos/paginas/Profile.css";
+import TarjetaMascota from "../componentes/TarjetaMascota";
+import { obtenerMisPublicaciones, obtenerMisIntereses } from "../api/servicioAnimalito";
 
 function Profile() {
   const [usuario, setUsuario] = useState({ nombre: "", email: "", codigoPostal: "", passwordOld: "", passwordNew: "" });
   const [mensaje, setMensaje] = useState({ texto: "", tipo: "" });
   const [cargando, setCargando] = useState(true);
-
+  const [misPublicaciones, setMisPublicaciones] = useState([]);
+  const [misIntereses, setMisIntereses] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,12 +29,25 @@ function Profile() {
       }
     };
     cargarPerfil();
+    const cargarAnimalitosPerfil = async () => {
+      try {
+        const publicaciones = await obtenerMisPublicaciones();
+        const intereses = await obtenerMisIntereses();
+
+        setMisPublicaciones(publicaciones);
+        setMisIntereses(intereses);
+      } catch (error) {
+        console.error("Error al cargar animalitos del perfil:", error);
+      }
+    };
+
+    cargarAnimalitosPerfil();
   }, []);
 
   const logoutHandler = async () => {
-    await logout
+    await logout();
     navigate("/login");
-  }
+  };
 
   const handleChange = (e) => {
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
@@ -86,134 +102,174 @@ function Profile() {
   if (cargando) return <div className="profile-loading">Cargando tu perfil...</div>;
 
   return (
-    <>
-      <Navbar usuario = {usuario} onLogout = {logoutHandler}/>
+      <>
+        <Navbar usuario={usuario} onLogout={logoutHandler} />
 
-      <div className="profile-container">
-        <div className="profile-wrapper">
+        <div className="profile-container">
+          <div className="profile-wrapper">
 
-          {/* PANEL IZQUIERDO */}
-          <div className="profile-sidebar">
-            <div className="profile-avatar-container">
-              <img
-                src="/recursos/imagenes/usuario-navbar.png"
-                alt="Avatar"
-                className="profile-avatar"
-              />
-              <button className="avatar-edit-btn" title="Cambiar foto">
-                <Camera size={18} />
-              </button>
+            <div className="profile-sidebar">
+              <div className="profile-avatar-container">
+                <img
+                    src="/recursos/imagenes/usuario-navbar.png"
+                    alt="Avatar"
+                    className="profile-avatar"
+                />
+                <button className="avatar-edit-btn" title="Cambiar foto">
+                  <Camera size={18} />
+                </button>
+              </div>
+
+              <h3 className="sidebar-name">{usuario.nombre || "Usuario PetConnect"}</h3>
+
+              <p className="sidebar-role">
+                <Heart size={16} color="#e74c3c" fill="#e74c3c" /> Amante de las mascotas
+              </p>
             </div>
-            <h3 className="sidebar-name">{usuario.nombre || "Usuario PetConnect"}</h3>
-            <p className="sidebar-role">
-              <Heart size={16} color="#e74c3c" fill="#e74c3c" /> Amante de las mascotas
-            </p>
-          </div>
 
-          {/* PANEL DERECHO */}
-          <div className="profile-content">
-            <h2 className="profile-title">Configuración de Cuenta</h2>
-            <p className="profile-subtitle">Actualiza tu información personal y de seguridad.</p>
+            <div className="profile-content">
+              <h2 className="profile-title">Configuración de Cuenta</h2>
+              <p className="profile-subtitle">Actualiza tu información personal y de seguridad.</p>
 
-            {mensaje.texto && (
-              <div className={`profile-alert ${mensaje.tipo}`}>
-                {mensaje.texto}
-              </div>
-            )}
+              {mensaje.texto && (
+                  <div className={`profile-alert ${mensaje.tipo}`}>
+                    {mensaje.texto}
+                  </div>
+              )}
 
-            <form onSubmit={handleSubmit} className="profile-form">
-              <div className="form-group">
-                <label htmlFor="nombre">Nombre completo</label>
-                <div className="input-with-icon">
-                  <User className="input-icon" size={20} />
-                  <input
-                    type="text"
-                    id="nombre"
-                    name="nombre"
-                    value={usuario.nombre}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="email">Correo electrónico</label>
-                <div className="input-with-icon">
-                  <Mail className="input-icon" size={20} />
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={usuario.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="codigoPostal">Código postal</label>
-                <div className="input-with-icon">
-                  <MapPin className="input-icon" size={20} />
-                  <input
-                    type="text"
-                    id="codigoPostal"
-                    name="codigoPostal"
-                    value={usuario.codigoPostal}
-                    onChange={handleChange}
-                    maxLength="5"
-                    placeholder="Tu CP para el mapa"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div style={{ marginTop: "10px", padding: "15px", backgroundColor: "#f8f9fa", borderRadius: "8px", border: "1px dashed #ced4da" }}>
-                <h4 style={{ margin: "0 0 15px 0", color: "#34495e", fontSize: "15px" }}>Cambio de Contraseña <span className="opcional">(Opcional)</span></h4>
-
-                <div className="form-group" style={{ marginBottom: "15px" }}>
-                  <label htmlFor="passwordOld">Contraseña Actual</label>
+              <form onSubmit={handleSubmit} className="profile-form">
+                <div className="form-group">
+                  <label htmlFor="nombre">Nombre completo</label>
                   <div className="input-with-icon">
-                    <KeyRound className="input-icon" size={20} />
+                    <User className="input-icon" size={20} />
                     <input
-                      type="password"
-                      id="passwordOld"
-                      name="passwordOld"
-                      value={usuario.passwordOld}
-                      onChange={handleChange}
-                      placeholder="Requerida si deseas cambiarla"
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        value={usuario.nombre}
+                        onChange={handleChange}
+                        required
                     />
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="passwordNew">Nueva Contraseña</label>
+                  <label htmlFor="email">Correo electrónico</label>
                   <div className="input-with-icon">
-                    <Lock className="input-icon" size={20} />
+                    <Mail className="input-icon" size={20} />
                     <input
-                      type="password"
-                      id="passwordNew"
-                      name="passwordNew"
-                      value={usuario.passwordNew}
-                      onChange={handleChange}
-                      placeholder="Escribe tu nueva contraseña"
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={usuario.email}
+                        onChange={handleChange}
+                        required
                     />
                   </div>
                 </div>
+
+                <div className="form-group">
+                  <label htmlFor="codigoPostal">Código postal</label>
+                  <div className="input-with-icon">
+                    <MapPin className="input-icon" size={20} />
+                    <input
+                        type="text"
+                        id="codigoPostal"
+                        name="codigoPostal"
+                        value={usuario.codigoPostal}
+                        onChange={handleChange}
+                        maxLength="5"
+                        placeholder="Tu CP para el mapa"
+                        required
+                    />
+                  </div>
+                </div>
+
+                <div style={{ marginTop: "10px", padding: "15px", backgroundColor: "#f8f9fa", borderRadius: "8px", border: "1px dashed #ced4da" }}>
+                  <h4 style={{ margin: "0 0 15px 0", color: "#34495e", fontSize: "15px" }}>
+                    Cambio de Contraseña <span className="opcional">(Opcional)</span>
+                  </h4>
+
+                  <div className="form-group" style={{ marginBottom: "15px" }}>
+                    <label htmlFor="passwordOld">Contraseña Actual</label>
+                    <div className="input-with-icon">
+                      <KeyRound className="input-icon" size={20} />
+                      <input
+                          type="password"
+                          id="passwordOld"
+                          name="passwordOld"
+                          value={usuario.passwordOld}
+                          onChange={handleChange}
+                          placeholder="Requerida si deseas cambiarla"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="passwordNew">Nueva Contraseña</label>
+                    <div className="input-with-icon">
+                      <Lock className="input-icon" size={20} />
+                      <input
+                          type="password"
+                          id="passwordNew"
+                          name="passwordNew"
+                          value={usuario.passwordNew}
+                          onChange={handleChange}
+                          placeholder="Escribe tu nueva contraseña"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-actions">
+                  <button type="submit" className="profile-button">
+                    Guardar Cambios
+                  </button>
+                </div>
+              </form>
+
+              <div className="profile-seccion-animalitos">
+                <h2 className="profile-title">Animalitos que he publicado</h2>
+
+                {misPublicaciones.length === 0 ? (
+                    <p className="profile-subtitle">Aún no has publicado animalitos.</p>
+                ) : (
+                    <div className="profile-grid-animalitos">
+                      {misPublicaciones.map((mascota) => (
+                          <TarjetaMascota
+                              key={mascota.id}
+                              mascota={mascota}
+                              mostrarFavorito={false}
+                              mostrarEstado={true}
+                          />
+                      ))}
+                    </div>
+                )}
               </div>
 
-              <div className="form-actions">
-                <button type="submit" className="profile-button">
-                  Guardar Cambios
-                </button>
+              <div className="profile-seccion-animalitos">
+                <h2 className="profile-title">Animalitos que me interesan</h2>
+
+                {misIntereses.length === 0 ? (
+                    <p className="profile-subtitle">
+                      Aún no has mostrado interés por ningún animalito disponible.
+                    </p>
+                ) : (
+                    <div className="profile-grid-animalitos">
+                      {misIntereses.map((mascota) => (
+                          <TarjetaMascota
+                              key={mascota.id}
+                              mascota={mascota}
+                              inicialFavorito={true}
+                          />
+                      ))}
+                    </div>
+                )}
               </div>
-            </form>
+            </div>
           </div>
-
         </div>
-      </div>
-    </>
+      </>
   );
 }
 
