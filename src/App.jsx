@@ -10,6 +10,8 @@ import MascotaPerfil from "./paginas/MascotaPerfil";
 import MapaAnimalitos from "./paginas/MapaAnimalitos";
 import Favoritos from "./paginas/Favoritos"
 import Notificaciones from "./paginas/Notificaciones"
+import MisPublicaciones from "./paginas/MisPublicaciones";
+import MisIntereses from "./paginas/MisIntereses";
 
 function App() {
   return (
@@ -38,6 +40,24 @@ function App() {
             <Profile />
           </ProtectedRoute>
         }/>
+
+        <Route
+            path="/mis-publicaciones"
+            element={
+              <ProtectedRoute>
+                <MisPublicaciones />
+              </ProtectedRoute>
+            }
+        />
+
+        <Route
+            path="/mis-intereses"
+            element={
+              <ProtectedRoute>
+                <MisIntereses />
+              </ProtectedRoute>
+            }
+        />
 
         <Route path="/update" element={
           <ProtectedRoute>

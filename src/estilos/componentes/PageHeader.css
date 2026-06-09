@@ -1,0 +1,29 @@
+.page-header {
+    width: 100%;
+    background-color: #f5a623;
+    padding: 120px 72px 38px 72px;
+    color: white;
+    box-sizing: border-box;
+}
+
+.page-header-contenido h1 {
+    margin: 0;
+    font-size: 44px;
+    font-weight: 800;
+}
+
+.page-header-contenido p {
+    margin: 8px 0 0 0;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 110px 24px 32px 24px;
+    }
+
+    .page-header-contenido h1 {
+        font-size: 32px;
+    }
+}

@@ -18,7 +18,12 @@ import { Heart } from "lucide-react";
  * @param {string} mascota.imagen - Ruta de la imagen de la mascota.
  * @returns {JSX.Element} Tarjeta con la informacion de la mascota.
  */
-function TarjetaMascota({ mascota, inicialFavorito }) {
+function TarjetaMascota({
+                            mascota,
+                            inicialFavorito,
+                            mostrarFavorito = true,
+                            mostrarEstado = false
+                        }) {
     const navigate = useNavigate();
     const [favorito, setFavorito] = useState(inicialFavorito || false);
     // para evitar muchos clicks rápidos mientras el backend está procesando el reqeust
@@ -52,9 +57,15 @@ function TarjetaMascota({ mascota, inicialFavorito }) {
                   alt={mascota.nombre}
                   className="tarjeta-imagen"
                 />
-                <button className="tarjeta-favorito" onClick={favoritoClick} disabled={procesando}>
-                    {favorito ? <Heart size={18} color="#000000" fill="#e74c3c" /> : <Heart size={18} color="#000000" />}
-                </button>
+                {mostrarFavorito && (
+                    <button className="tarjeta-favorito" onClick={favoritoClick} disabled={procesando}>
+                        {favorito ? (
+                            <Heart size={18} color="#000000" fill="#e74c3c" />
+                        ) : (
+                            <Heart size={18} color="#000000" />
+                        )}
+                    </button>
+                )}
             </div>
             <div className="tarjeta-info">
                 <div className="tarjeta-encabezado">
@@ -63,6 +74,11 @@ function TarjetaMascota({ mascota, inicialFavorito }) {
                         <p className="tarjeta-raza">
                           {mascota.raza || "Sin especificar"}
                         </p>
+                        {mostrarEstado && (
+                            <span className={mascota.adoptado ? "estado-adoptado" : "estado-disponible"}>
+                                {mascota.adoptado ? "Adoptado" : "Disponible"}
+                            </span>
+                        )}
                     </div>
                     <span className="tarjeta-sexo">{mascota.sexo}</span>
                 </div>

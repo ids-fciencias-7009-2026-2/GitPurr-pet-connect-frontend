@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaMapPin } from "react-icons/fa6";
 import { Heart, MapPin, Calendar, Tag, HouseHeart, ShieldCheck, X, ArrowBigDown } from "lucide-react";
-import { obtenerAnimalitoPorId, expresarInteres } from "../api/servicioAnimalito";
+import { obtenerAnimalitoPorId, expresarInteres, marcarAnimalitoComoAdoptado } from "../api/servicioAnimalito";
 import { me, logout } from "../api/servicioUsuario";
 import Navbar from "../componentes/Navbar";
 import "../estilos/paginas/MascotaPerfil.css";
@@ -13,6 +13,7 @@ function MascotaPerfil() {
   const [mascota, setMascota] = useState(null);
   const [modalAbierto, setModalAbierto] = useState(false);
   const [confirmacionAbierta, setConfirmacionAbierta] = useState(false);
+  const [confirmacionAdoptadoAbierta, setConfirmacionAdoptadoAbierta] = useState(false);
   const [resultado, setResultado] = useState(null);
 
   const [usuario, setUsuario] = useState(null);
@@ -42,7 +43,7 @@ function MascotaPerfil() {
   }, [id]);
 
   const logoutHandler = async () => {
-    await logout
+    await logout();
     navigate("/login");
   }
 
@@ -50,6 +51,7 @@ function MascotaPerfil() {
 
   /* Imagen de la mascota */
   const imagen = mascota.fotoUrl || "/recursos/imagenes/default.jpg";
+  const esDueno = usuario?.id?.toString() === mascota.usuarioId?.toString();
 
   const datosMascota = () => navigate("/mapa", {
     state: {
@@ -90,7 +92,7 @@ return (
 
           <p className="sidebar-role">
             <HouseHeart size={20} color="#e74c3c" />
-            Buscando un hogar
+            {mascota.adoptado ? "Adoptado" : "Buscando un hogar"}
           </p>
 
           <div className="sidebar-tags">
@@ -146,19 +148,32 @@ return (
           </div>
 
           <div className="actions-mascota">
-            <button
-              className="animalito-btn adoptar-button"
-              onClick={() => setConfirmacionAbierta(true)}
-            >
-              Me interesa <Heart size={16} color="#e74c3c" fill="#e74c3c" />
-            </button>
+            {esDueno && !mascota.adoptado && (
+                <button
+                    className="animalito-btn adoptar-button"
+                    onClick={() => setConfirmacionAdoptadoAbierta(true)}
+                >
+                  ¡Adoptado!
+                </button>
+            )}
 
-            <button
-              className="animalito-btn mostrar-mapa-btn"
-              onClick={() => datosMascota()}
-            >
-              Mostrar en el mapa <FaMapPin size={16} color="#BF0413" />
-            </button>
+            {!esDueno && !mascota.adoptado && (
+                <button
+                    className="animalito-btn adoptar-button"
+                    onClick={() => setConfirmacionAbierta(true)}
+                >
+                  Me interesa <Heart size={16} color="#e74c3c" fill="#e74c3c" />
+                </button>
+            )}
+
+            {!mascota.adoptado && (
+                <button
+                    className="animalito-btn mostrar-mapa-btn"
+                    onClick={() => datosMascota()}
+                >
+                  Mostrar en el mapa <FaMapPin size={16} color="#BF0413" />
+                </button>
+            )}
           </div>
 
         </div>
@@ -229,15 +244,65 @@ return (
         </div>
       )}
 
+      {confirmacionAdoptadoAbierta && (
+          <div className="confirmacion-overlay">
+            <div className="confirmacion-modal">
+              <h3>Marcar como adoptado</h3>
+
+              <p>
+                Estás por marcar que {mascota.nombre} ya fue dado en adopción.
+                Al confirmar, ya no será visible para otras personas ni aparecerá en inicio,
+                pero seguirá apareciendo en tu perfil como parte de tus publicaciones.
+                ¿Estás segura de realizar esta acción?
+              </p>
+
+              <div className="actions-confirmacion">
+                <button
+                    className="cancelar-btn"
+                    onClick={() => setConfirmacionAdoptadoAbierta(false)}
+                >
+                  Cancelar
+                </button>
+
+                <button
+                    className="confirmar-btn"
+                    onClick={async () => {
+                      try {
+                        const actualizado = await marcarAnimalitoComoAdoptado(id);
+                        setMascota(actualizado);
+                        setConfirmacionAdoptadoAbierta(false);
+                        setResultado("adoptado");
+                      } catch (error) {
+                        console.error("Error al marcar como adoptado:", error);
+                        setConfirmacionAdoptadoAbierta(false);
+                        setResultado("error");
+                      }
+                    }}
+                >
+                  Sí, marcar como adoptado
+                </button>
+              </div>
+            </div>
+          </div>
+      )}
+
       {/* modal resultado */}
       {resultado && (
         <div className="confirmacion-overlay">
           <div className="confirmacion-modal">
-            <h3>{resultado === "exito" ? "¡Correo enviado! 🐾" : "Algo salió mal 😿"}</h3>
+            <h3>
+              {resultado === "exito"
+                  ? "¡Correo enviado! 🐾"
+                  : resultado === "adoptado"
+                      ? "Animalito marcado como adoptado 🐾"
+                      : "Algo salió mal 😿"}
+            </h3>
             <p>
               {resultado === "exito"
-                ? "Correo mandado exitosamente, espera respuesta del dueño."
-                : "Hubo un problema al enviar el correo, intenta de nuevo."}
+                  ? "Correo mandado exitosamente, espera respuesta del dueño."
+                  : resultado === "adoptado"
+                      ? `${mascota.nombre} ya no aparecerá como disponible para otras personas.`
+                      : "Hubo un problema al enviar el correo, intenta de nuevo."}
             </p>
             <div className="actions-confirmacion">
               {resultado === "error" && (

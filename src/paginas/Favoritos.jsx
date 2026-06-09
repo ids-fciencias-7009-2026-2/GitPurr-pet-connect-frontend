@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom"
 import { obtenerFavoritos } from "../api/servicioUsuario"
 import TarjetaMascota from "../componentes/TarjetaMascota"
 import "../estilos/paginas/Favoritos.css"
+import Navbar from "../componentes/Navbar";
+import { me, logout } from "../api/servicioUsuario";
+import PageHeader from "../componentes/PageHeader";
 
 /**
  * Pagina de las mascotas favoritas del usuario.
@@ -14,9 +17,15 @@ import "../estilos/paginas/Favoritos.css"
  * como favoritas.
  */
 function Favoritos() {
-    const navegacion = useNavigate()
     const [mascotasFavoritas, setMascotasFavoritas] = useState([])
     const [cargando, setCargando] = useState(true)
+    const [usuario, setUsuario] = useState(null);
+    const navigate = useNavigate();
+
+    const logoutHandler = async () => {
+        await logout();
+        navigate("/login");
+    };
 
     useEffect(() => {
         const cargarFavoritos =
@@ -31,6 +40,17 @@ function Favoritos() {
                 }
             }
         cargarFavoritos()
+
+        const cargarUsuario = async () => {
+            try {
+                const datos = await me();
+                setUsuario(datos);
+            } catch (error) {
+                console.error("Error al cargar usuario:", error);
+            }
+        };
+
+        cargarUsuario();
     }, [])
 
     if(cargando) {
@@ -38,33 +58,41 @@ function Favoritos() {
     }
 
     return (
-        <div className="pagina-favoritos">
-            <h1 className="titulo-seccion">Mis mascotas favoritas</h1>
+        <>
+            <Navbar usuario={usuario} onLogout={logoutHandler} />
 
-            {mascotasFavoritas.length === 0 ? (
-                <div className="estado-vacio">
-                    <h2>¡Aún no tienes mascotas favoritas!</h2>
-                    <p>Explora nuestra lista de mascotas y dales un corazón para guardarlos aquí.</p>
-                    <button className="btn-primario" onClick={() => navegacion("/home")}>
-                        Ver mascotas
-                    </button>
-                </div>
-            ) : (
-                <div className="home-grid">
-                    {mascotasFavoritas.map(mascota => (
-                        <TarjetaMascota
-                            key={mascota.id}
-                            mascota={{
-                                ...mascota,
-                                imagen: mascota.fotoUrl || "/recursos/imagenes/default.jpg",
-                                ubicacion: mascota.codigoPostal
-                            }}
-                            inicialFavorito={true}
-                        />
-                    ))}
-                </div>
-            )}
-        </div>
+            <PageHeader
+                titulo="Mis mascotas favoritas"
+                subtitulo="Consulta las mascotas que guardaste como favoritas"
+            />
+
+            <main className="pagina-favoritos">
+
+                {mascotasFavoritas.length === 0 ? (
+                    <div className="estado-vacio">
+                        <h2>¡Aún no tienes mascotas favoritas!</h2>
+                        <p>Explora nuestra lista de mascotas y dales un corazón para guardarlos aquí.</p>
+                        <button className="btn-primario" onClick={() => navigate("/home")}>
+                            Ver mascotas
+                        </button>
+                    </div>
+                ) : (
+                    <div className="home-grid">
+                        {mascotasFavoritas.map(mascota => (
+                            <TarjetaMascota
+                                key={mascota.id}
+                                mascota={{
+                                    ...mascota,
+                                    imagen: mascota.fotoUrl || "/recursos/imagenes/default.jpg",
+                                    ubicacion: mascota.codigoPostal
+                                }}
+                                inicialFavorito={true}
+                            />
+                        ))}
+                    </div>
+                )}
+            </main>
+        </>
     );
 }
 
